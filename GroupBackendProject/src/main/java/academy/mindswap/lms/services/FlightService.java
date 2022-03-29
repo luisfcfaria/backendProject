@@ -1,7 +1,6 @@
 package academy.mindswap.lms.services;
 
 import academy.mindswap.lms.commands.FlightDTO;
-import academy.mindswap.lms.controllers.FlightController;
 import academy.mindswap.lms.converters.FlightConverter;
 import academy.mindswap.lms.persistence.repositories.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,8 +89,9 @@ public class FlightService {
         }
     }
 
-    public void deleteFlight(String flightNumber) {
+    public FlightDTO deleteFlight(String flightNumber) {
         LOGGER.log(Level.INFO, "Deleting flight: " + flightNumber);
         flightRepository.deleteByFlightNumber(flightNumber);
+        return null;
     }
 }
