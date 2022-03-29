@@ -1,14 +1,11 @@
 package academy.mindswap.lms.persistence.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -42,7 +39,15 @@ public class User {
 
     @JsonIgnore
     @ManyToMany
-    @JoinTable(name = "Passenger_Flights", joinColumns = {@JoinColumn(name = "userId", referencedColumnName = "userId")}, inverseJoinColumns = {@JoinColumn(name = "flight_number", referencedColumnName = "flight_number")})
+    @JoinTable(name = "User_Roles", joinColumns = {@JoinColumn(name = "userId", referencedColumnName = "userId")},
+            inverseJoinColumns = {@JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID")})
+    private Collection<Role> roles = new HashSet<>();
+
+
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(name = "User_Flights", joinColumns = {@JoinColumn(name = "userId", referencedColumnName = "userId")},
+            inverseJoinColumns = {@JoinColumn(name = "flight_number", referencedColumnName = "flight_number")})
     private Collection<Flight> flights = new HashSet<>();
 
 }

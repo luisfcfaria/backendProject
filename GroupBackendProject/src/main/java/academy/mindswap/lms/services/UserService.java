@@ -44,18 +44,17 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    public UserDto bookFlight(String email, String flightId) {
 
-
-    public UserDto bookFlight(UserDto userDto, String flightId) {
-        if(userConverter.convertToEntity(userDto) != null && flightRepository.findByFlightNumber(flightId)) != null) {
-        User user = userConverter.convertToEntity(userDto);
+        User user = userRepository.findByEmail(email).get();
         Flight flight = flightRepository.findByFlightNumber(flightId);
-        user.getFlights().add(flight);
-        return userConverter.convertToDto(userRepository.save(user));
+
+        if (user != null && flight != null) {
+            user.getFlights().add(flight);
+            return userConverter.convertToDto(userRepository.save(user));
+        }
+        return null;
     }
-
-
-
 
     public List<UserDto> getUserByOther(String name) {
         return userRepository.findByOtherNameThatIWant(name)
@@ -67,8 +66,8 @@ public class UserService {
         return userConverter
                 .convertToDto(
                         userRepository.save(
-                        userConverter.convertToEntity(userDto)
-                ));
+                                userConverter.convertToEntity(userDto)
+                        ));
     }
 
     public User login(String name, String password) {
@@ -86,23 +85,27 @@ public class UserService {
 
     public Optional<UserDto> getUserById(long id) {
 
-        if(id < 0) {
+        if (id < 0) {
             LOGGER.log(Level.WARN, "Users are trying to break our site: " + id);
             throw new InvalidUserId(Long.toString(id));
         }
         Optional<User> user = userRepository.findById(id);
 
-        if (user.isEmpty()){
+        if (user.isEmpty()) {
             throw new UserNotFoundException(Long.toString(id));
         }
         return user.map(userConverter::convertToDto);
     }
 
     public User validate(String email) {
-        return userRepository.findByEmail(email);
+        return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException(email));
     }
 
     public User findByEmailAndPassword(String email, String password) {
-        return userRepository.findByEmailAndPassword(email, password).orElseThrow(()->new UserNotFoundException(email));
+        return userRepository.findByEmailAndPassword(email, password).orElseThrow(() -> new UserNotFoundException(email));
+    }
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException(email));
     }
 }
