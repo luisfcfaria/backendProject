@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface FlightRepository extends JpaRepository<Flight, String> {
     Flight findByFlightNumber(String flightNumber);
 
-    Flight findByDestination(String destination);
+    Flight findByArrivalAirport(String destination);
 
     void deleteByFlightNumber(String flightNumber);
 }

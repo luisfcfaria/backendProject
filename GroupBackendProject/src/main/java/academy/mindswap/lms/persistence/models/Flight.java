@@ -2,10 +2,10 @@ package academy.mindswap.lms.persistence.models;
 
 import lombok.*;
 
-import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Getter
 @Setter
@@ -16,7 +16,7 @@ import java.util.Set;
 @Table(name = "flights")
 public class Flight {
 
-    @EmbeddedId
+    @Id
     @Column(name = "flight_number")
     private String flightNumber;
     @Column(name = "departure_date")
@@ -32,8 +32,9 @@ public class Flight {
     @Column(name = "arrival_airport")
     private String arrivalAirport;
 
-    @Column
-    @ManyToMany(mappedBy = "flight_user", cascade = CascadeType.ALL)
-    private Collection<User> users = new HashSet<>();
+
+//    @ManyToMany(mappedBy = "flight_user")
+//    @JsonIgnore
+//    private Collection<User> users;
 
 }

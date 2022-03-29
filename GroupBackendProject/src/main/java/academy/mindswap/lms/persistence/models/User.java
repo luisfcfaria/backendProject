@@ -5,7 +5,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.HashSet;
 
 @Getter
 @Setter
@@ -17,7 +16,7 @@ import java.util.HashSet;
 //@JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 
-    @EmbeddedId
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userId")
     private Long idNumber;
@@ -25,6 +24,8 @@ public class User {
     private String firstName;
     @Column
     private String lastName;
+    @Column
+    private String name = firstName.concat(" " + lastName);
     @Column
     private String email;
     @Column
@@ -38,17 +39,17 @@ public class User {
 //    private String location;
 
     @JsonIgnore
-    @ManyToMany
-    @JoinTable(name = "User_Roles", joinColumns = {@JoinColumn(name = "userId", referencedColumnName = "userId")},
-            inverseJoinColumns = {@JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID")})
-    private Collection<Role> roles = new HashSet<>();
+    @ManyToMany//(fetch = FetchType.EAGER)
+    @JoinTable(name = "User_Roles", joinColumns =@JoinColumn(name = "userId"/*, referencedColumnName = "userId"*/),
+            inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
+    private Collection<Role> roles;
 
 
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(name = "User_Flights", joinColumns = {@JoinColumn(name = "userId", referencedColumnName = "userId")},
-            inverseJoinColumns = {@JoinColumn(name = "flight_number", referencedColumnName = "flight_number")})
-    private Collection<Flight> flights = new HashSet<>();
+//   @JsonIgnore
+//    @ManyToMany//(fetch = FetchType.EAGER)
+//    @JoinTable(name = "User_Flights", joinColumns = @JoinColumn(name = "userId"), //referencedColumnName = "userId"),
+//            inverseJoinColumns = @JoinColumn(name = "flight_number"))
+//    private Collection<Flight> flights;
 
 }
 

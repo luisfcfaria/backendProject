@@ -64,15 +64,15 @@ public class UserController {
     }
 
     @GetMapping("/search")
-    public List<UserDto> getUserByName(@RequestParam(value = "name", defaultValue = "World") String firstName, String lastName) {
-        log.info( "getUserByName: " + firstName + " " + lastName);
-        return  userService.getUserByName(firstName, lastName);
+    public List<UserDto> getUserByName(@RequestParam(value = "name", defaultValue = "World") String name) {
+        log.info( "getUserByName: " + name);
+        return  userService.getUserByName(name);
     }
 
-    @GetMapping("/find")
-    public List<UserDto> getUserByNameIWant(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return  userService.getUserByOther(name);
-    }
+//    @GetMapping("/find")
+//    public List<UserDto> getUserByNameIWant(@RequestParam(value = "name", defaultValue = "World") String name) {
+//        return  userService.getUserByOther(name);
+//    }
 
     @GetMapping("/users")
     @MindswapAnnotation
