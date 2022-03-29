@@ -17,7 +17,7 @@ public class SetupDataLoader  {
     @EventListener (classes = { ContextStartedEvent.class })
     public void onApplicationEventStart() {
         System.out.println("ContextStartedEvent");
-        userDataLoader.loadData();
+       // userDataLoader.loadData();
     }
 
     @EventListener(classes = { ContextStoppedEvent.class, ContextRefreshedEvent.class })

@@ -51,7 +51,7 @@ public class UserService {
         LOGGER.info("Adding role {} to user{}", roleName, email);
         User user = userRepository.findByEmail(email).get();
         Role role = roleRepository.findByName(roleName);
-        user.getRoles().add(role);
+       // user.getRoles().add(role);
         userRepository.save(user);
     }
 

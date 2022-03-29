@@ -15,6 +15,7 @@ import java.util.Collection;
 @Setter
 @RequiredArgsConstructor
 @Entity
+@Table(name = "roles")
 public class Role implements Serializable {
 
     private static final String GUEST = "GUEST";
@@ -29,9 +30,9 @@ public class Role implements Serializable {
     @Column(name = "ROLE_ID", nullable = false)
     private Long roleId;
     private String name;
-
-    @ManyToMany(mappedBy = "roles")
-    @JsonIgnore
-    private Collection<User> users;
+//
+//    @ManyToMany(mappedBy = "roles")
+//    @JsonIgnore
+//    private Collection<User> users;
 
 }

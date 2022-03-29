@@ -12,4 +12,4 @@ docker build -t users_service .
 docker run -it --rm --link mymariadb  -p 8080:8080 users_service
 
 #TO run the APP in compose
-**docker-compose up**
+docker-compose up

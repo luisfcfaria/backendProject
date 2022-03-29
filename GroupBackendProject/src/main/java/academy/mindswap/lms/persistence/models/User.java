@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -25,7 +26,7 @@ public class User {
     @Column
     private String lastName;
     @Column
-    private String name = firstName.concat(" " + lastName);
+    private String name = Objects.isNull(firstName) ? "" : firstName.concat(" " + lastName);
     @Column
     private String email;
     @Column
@@ -37,12 +38,12 @@ public class User {
 //    private String avatar_url;
 //    @Column
 //    private String location;
-
-    @JsonIgnore
-    @ManyToMany//(fetch = FetchType.EAGER)
-    @JoinTable(name = "User_Roles", joinColumns =@JoinColumn(name = "userId"/*, referencedColumnName = "userId"*/),
-            inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
-    private Collection<Role> roles;
+//
+//    @JsonIgnore
+//    @ManyToMany//(fetch = FetchType.EAGER)
+//    @JoinTable(name = "roles", joinColumns =@JoinColumn(name = "userId"/*, referencedColumnName = "userId"*/),
+//            inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
+//    private Collection<Role> roles;
 
 
 //   @JsonIgnore
