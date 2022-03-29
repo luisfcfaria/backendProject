@@ -7,6 +7,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -42,7 +43,7 @@ public class User {
     @JsonIgnore
     @ManyToMany
     @JoinTable(name = "Passenger_Flights", joinColumns = {@JoinColumn(name = "userId", referencedColumnName = "userId")}, inverseJoinColumns = {@JoinColumn(name = "flight_number", referencedColumnName = "flight_number")})
-    private Collection<Flight> flights;
+    private Collection<Flight> flights = new HashSet<>();
 
 }
 

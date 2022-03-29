@@ -2,10 +2,13 @@ package academy.mindswap.lms.services;
 
 import academy.mindswap.lms.annotations.MindswapAnnotation;
 import academy.mindswap.lms.commands.UserDto;
+import academy.mindswap.lms.converters.FlightConverter;
 import academy.mindswap.lms.converters.UserConverter;
 import academy.mindswap.lms.exceptions.InvalidUserId;
 import academy.mindswap.lms.exceptions.UserNotFoundException;
+import academy.mindswap.lms.persistence.models.Flight;
 import academy.mindswap.lms.persistence.models.User;
+import academy.mindswap.lms.persistence.repositories.FlightRepository;
 import academy.mindswap.lms.persistence.repositories.UserRepository;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -24,9 +27,13 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private FlightRepository flightRepository;
 
     @Autowired
     private UserConverter userConverter;
+    @Autowired
+    private FlightConverter flightConverter;
 
     public List<UserDto> getUserByName(String firstName, String lastName) {
         LOGGER.log(Level.INFO, "getUserByName: " + firstName.concat(" " + lastName));
@@ -35,6 +42,16 @@ public class UserService {
         return users.stream()
                 .map(userConverter::convertToDto)
                 .collect(Collectors.toList());
+    }
+
+
+
+    public UserDto bookFlight(UserDto userDto, String flightId) {
+        if(userConverter.convertToEntity(userDto) != null && flightRepository.findByFlightNumber(flightId)) != null) {
+        User user = userConverter.convertToEntity(userDto);
+        Flight flight = flightRepository.findByFlightNumber(flightId);
+        user.getFlights().add(flight);
+        return userConverter.convertToDto(userRepository.save(user));
     }
 
 

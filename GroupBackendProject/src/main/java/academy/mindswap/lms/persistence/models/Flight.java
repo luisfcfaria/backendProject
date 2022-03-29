@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -33,6 +34,6 @@ public class Flight {
 
     @Column
     @ManyToMany(mappedBy = "flight_user", cascade = CascadeType.ALL)
-    private Collection<User> users;
+    private Collection<User> users = new HashSet<>();
 
 }
