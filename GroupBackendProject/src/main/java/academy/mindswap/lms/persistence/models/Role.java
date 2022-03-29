@@ -16,14 +16,12 @@ import java.util.Collection;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "roles")
-public class Role implements Serializable {
+public class Role {
 
     private static final String GUEST = "GUEST";
     private static final String USER = "USER";
     private static final String ADMIN = "ADMIN";
 
-    @Serial
-    private static final long serialVersionUIS = 2L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
