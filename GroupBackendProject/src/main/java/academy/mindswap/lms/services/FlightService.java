@@ -66,6 +66,7 @@ public class FlightService {
     public List<FlightDTO> getAllFlights() {
 
         LOGGER.log(Level.INFO, "Getting all flights");
+
         return (flightRepository.findAll()
                 .stream()
                 .map(flightConverter::convertToDTO)
