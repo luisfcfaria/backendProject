@@ -64,9 +64,9 @@ public class UserController {
     }
 
     @GetMapping("/search")
-    public List<UserDto> getUserByName(@RequestParam(value = "name", defaultValue = "World") String name) {
-        log.info( "getUserByName: " + name);
-        return  userService.getUserByName(name);
+    public List<UserDto> getUserByName(@RequestParam(value = "name", defaultValue = "World") String firstName, String lastName) {
+        log.info( "getUserByName: " + firstName + " " + lastName);
+        return  userService.getUserByName(firstName, lastName);
     }
 
     @GetMapping("/find")

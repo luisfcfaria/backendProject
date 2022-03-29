@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository  extends JpaRepository<User, Integer> {
+public interface UserRepository  extends JpaRepository<User, Long> {
 
-    List<User> findByName(String username);
+    List<User> findByName(String firstName, String lastName);
 
     @Query("Select u from User u where u.name = :name")
     List<User> findByOtherNameThatIWant(@Param("name") String username);
@@ -22,4 +22,6 @@ public interface UserRepository  extends JpaRepository<User, Integer> {
     User findByEmail(String email);
 
     Optional<User> findByEmailAndPassword(String username, String password);
+
+    Optional<User> findById(long id);
 }

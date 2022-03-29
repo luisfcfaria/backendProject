@@ -28,12 +28,12 @@ public class UserService {
     @Autowired
     private UserConverter userConverter;
 
-    public List<UserDto> getUserByName(String name) {
-        LOGGER.log(Level.INFO, "getUserByName: " + name);
-        List<User> users = userRepository.findByName(name);
+    public List<UserDto> getUserByName(String firstName, String lastName) {
+        LOGGER.log(Level.INFO, "getUserByName: " + firstName.concat(" " + lastName));
+        List<User> users = userRepository.findByName(firstName, lastName);
 
         return users.stream()
-                .map(userConverter::toDto)
+                .map(userConverter::convertToDto)
                 .collect(Collectors.toList());
     }
 
@@ -43,14 +43,14 @@ public class UserService {
     public List<UserDto> getUserByOther(String name) {
         return userRepository.findByOtherNameThatIWant(name)
                 .stream()
-                .map(userConverter::toDto).collect(Collectors.toList());
+                .map(userConverter::convertToDto).collect(Collectors.toList());
     }
 
     public UserDto save(UserDto userDto) {
         return userConverter
-                .toDto(
+                .convertToDto(
                         userRepository.save(
-                        userConverter.toEntity(userDto)
+                        userConverter.convertToEntity(userDto)
                 ));
     }
 
@@ -63,22 +63,22 @@ public class UserService {
 
         return userRepository.findAll()
                 .stream()
-                .map(userConverter::toDto).collect(Collectors.toList());
+                .map(userConverter::convertToDto).collect(Collectors.toList());
     }
 
 
-    public Optional<UserDto> getUserById(int id) {
+    public Optional<UserDto> getUserById(long id) {
 
         if(id < 0) {
             LOGGER.log(Level.WARN, "Users are trying to break our site: " + id);
-            throw new InvalidUserId(Integer.toString(id));
+            throw new InvalidUserId(Long.toString(id));
         }
         Optional<User> user = userRepository.findById(id);
 
         if (user.isEmpty()){
-            throw new UserNotFoundException(Integer.toString(id));
+            throw new UserNotFoundException(Long.toString(id));
         }
-        return user.map(userConverter::toDto);
+        return user.map(userConverter::convertToDto);
     }
 
     public User validate(String email) {

@@ -1,23 +1,22 @@
 package academy.mindswap.lms.config;
 
-import academy.mindswap.lms.persistence.models.User;
-import academy.mindswap.lms.persistence.repositories.UserRepository;
+import academy.mindswap.lms.persistence.models.Flight;
+import academy.mindswap.lms.persistence.repositories.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
-import java.util.function.IntConsumer;
 import java.util.function.LongConsumer;
-import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
 @Component
-public class UserDataLoader {
+public class FlightDataLoader {
 
     @Autowired
-    private UserRepository userRepository;
+    private FlightRepository flightRepository;
 
-    public void loadData() {
+
+    public void flightLoader(){
        /* userRepository.deleteAll();
         for (int i = 1; i <= 10; i++) {
             User user = User.builder().id(i).name("user"+i).email("user" + i + "@email").password(i+"pass"+i).build();
@@ -25,15 +24,15 @@ public class UserDataLoader {
         }*/
 
         LongConsumer operation = i ->{
-            User user = User.builder().idNumber(i).firstName("user"+i).email("user" + i + "@email.com").password(i+"pass"+i).build();
-            createIfNotFound(i, user);
+            Flight flight = Flight.builder().flightNumber(""+ i).departureAirport("Airport"+i).arrivalAirport("Airport" + i + i).departureDate(i+"/"+i+"/"+i).arrivalDate(i+"/"+i+"/"+i).build();
+            createIfNotFound(i+"", flight);
         };
 
         reloadData(operation,20);
 
         LongConsumer operation2 = i ->{
-            User user = User.builder().idNumber(i).firstName("whatever"+i).email("whatever" + i + "@email.com").password(i+"whatever"+i).build();
-            createIfNotFound(i, user);
+            Flight flight = Flight.builder().flightNumber(""+ i).departureAirport("Airport"+i).arrivalAirport("Airport" + i + i).departureDate(i+"/"+i+"/"+i).arrivalDate(i+"/"+i+"/"+i).build();
+            createIfNotFound(i+"", flight);
         };
 
         reloadData(operation2,10);
@@ -45,9 +44,8 @@ public class UserDataLoader {
 
         LongStream.range(1, end).forEach(operation);
     }
-
-    public void createIfNotFound(Long id, User userToSave) {
-        Optional<User> user = userRepository.findById(id);
+    public void createIfNotFound(String id, Flight userToSave) {
+        Optional<Flight> user = flightRepository.findById(id);
         user.ifPresentOrElse(
                 u -> {
                     System.out.println("User already exists");
@@ -55,9 +53,10 @@ public class UserDataLoader {
                 () -> {
                     System.out.println("User not found, creating...");
 
-                    userRepository.save(userToSave);
+                    flightRepository.save(userToSave);
                 }
         );
     }
 
 }
+

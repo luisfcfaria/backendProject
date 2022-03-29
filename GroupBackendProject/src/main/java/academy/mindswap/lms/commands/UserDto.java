@@ -14,21 +14,15 @@ import javax.validation.constraints.NotBlank;
 @Builder
 public class UserDto {
 
-    private Integer id;
 
+    private Integer idNumber;
     @NotBlank( message= "Name cannot be empty")
-    private String name;
-
+    private String firstName;
+    private String lastName;
     @Email(message = "Invalid email address")
     @NotBlank( message= "Email cannot be empty")
     private String email;
+    private Integer age;
 
-    @Override
-    public String toString() {
-        return "UserDto{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
+
 }
