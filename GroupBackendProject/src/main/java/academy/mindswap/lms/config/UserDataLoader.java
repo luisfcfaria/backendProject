@@ -38,7 +38,6 @@ public class UserDataLoader {
 
         reloadData(operation2,10);
 
-        //IntStream.range(1, 100).forEach(operation);
     }
 
     public void reloadData(LongConsumer operation, Integer end) {

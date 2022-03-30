@@ -1,11 +1,10 @@
 package academy.mindswap.lms.persistence.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -32,9 +31,8 @@ public class Flight {
     @Column(name = "arrival_airport")
     private String arrivalAirport;
 
-
 //    @ManyToMany(mappedBy = "flight_user")
 //    @JsonIgnore
-//    private Collection<User> users;
+//    private Set<User> users;
 
 }

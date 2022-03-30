@@ -34,20 +34,15 @@ public class User {
     @Column
     private Integer age;
 
-//    @Column
-//    private String avatar_url;
-//    @Column
-//    private String location;
-//
 //    @JsonIgnore
-//    @ManyToMany//(fetch = FetchType.EAGER)
+//    @ManyToMany(fetch = FetchType.EAGER)
 //    @JoinTable(name = "roles", joinColumns =@JoinColumn(name = "userId"/*, referencedColumnName = "userId"*/),
 //            inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
 //    private Collection<Role> roles;
-
-
+//
+//
 //   @JsonIgnore
-//    @ManyToMany//(fetch = FetchType.EAGER)
+//    @ManyToMany(fetch = FetchType.EAGER)
 //    @JoinTable(name = "User_Flights", joinColumns = @JoinColumn(name = "userId"), //referencedColumnName = "userId"),
 //            inverseJoinColumns = @JoinColumn(name = "flight_number"))
 //    private Collection<Flight> flights;
