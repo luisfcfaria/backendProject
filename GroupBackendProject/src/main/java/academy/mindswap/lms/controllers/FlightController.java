@@ -1,19 +1,15 @@
 package academy.mindswap.lms.controllers;
 
 import academy.mindswap.lms.commands.FlightDTO;
-import academy.mindswap.lms.persistence.models.Flight;
 import academy.mindswap.lms.services.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.naming.Binding;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.ObjIntConsumer;
 
 @RestController
 @RequestMapping("/api")
@@ -32,16 +28,16 @@ public class FlightController {
     }
 
     @GetMapping("/flights/{id}")
-    public ResponseEntity<FlightDTO> getFlight(@PathVariable String id) {
+    public ResponseEntity<FlightDTO> getFlight(@PathVariable Integer id) {
         Optional<FlightDTO> flight = Optional.ofNullable(flightService.getFlightByNumber(id));
 
         return flight.map(flightDTO -> ResponseEntity.ok().body(flightDTO))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/flights/origin/{origin}")
-    public ResponseEntity<List<FlightDTO>> getFlightByOrigin(@PathVariable String origin) {
-        List<FlightDTO> flights = flightService.getFlightByDeparture(origin);
+    @GetMapping("/flights/origin/{departureAirport}")
+    public ResponseEntity<List<FlightDTO>> getFlightByOrigin(@PathVariable String departureAirport) {
+        List<FlightDTO> flights = flightService.getFlightByDeparture(departureAirport);
         if (flights.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -58,7 +54,7 @@ public class FlightController {
         return ResponseEntity.ok().body(flights);
     }
 
-    @PostMapping("/admin/updateflight")
+    @PutMapping("/admin/updateflight")
     public ResponseEntity<FlightDTO> updateFlight(@RequestBody FlightDTO flightDTO, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(null);

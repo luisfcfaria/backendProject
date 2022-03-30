@@ -81,6 +81,13 @@ public class UserController {
         return  userService.getAllUsers();
     }
 
+    @PostMapping("/role/addToUser/{id}")
+    public ResponseEntity<?> saveRole(@PathVariable Long id, @RequestBody String roleName){
+//        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("api/role/save").toUriString());
+        userService.addRoleToUser(id, roleName);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/user/github/{githubId}")
     public User getGitHubUser(@PathVariable String githubId) throws ExecutionException, InterruptedException {
         System.out.println("before Github Id: " + githubId);
