@@ -13,6 +13,8 @@ public class SetupDataLoader  {
     private UserDataLoader userDataLoader;
     @Autowired
     private FlightDataLoader flightDataLoader;
+    @Autowired
+    private RoleDataLoader roleDataLoader;
 
     private boolean loaded = false;
 
@@ -29,6 +31,7 @@ public class SetupDataLoader  {
         if (!loaded) {
             userDataLoader.loadData();
             flightDataLoader.flightLoader();
+            roleDataLoader.createRoles();
             loaded = true;
         }
     }

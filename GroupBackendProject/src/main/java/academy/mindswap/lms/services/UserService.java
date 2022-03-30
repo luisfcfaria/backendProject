@@ -6,6 +6,8 @@ import academy.mindswap.lms.converters.FlightConverter;
 import academy.mindswap.lms.converters.UserConverter;
 import academy.mindswap.lms.exceptions.InvalidUserId;
 import academy.mindswap.lms.exceptions.UserNotFoundException;
+import academy.mindswap.lms.exceptions.error.RoleNotFoundException;
+import academy.mindswap.lms.persistence.models.Flight;
 import academy.mindswap.lms.persistence.models.Role;
 import academy.mindswap.lms.persistence.models.User;
 import academy.mindswap.lms.persistence.repositories.FlightRepository;
@@ -37,6 +39,8 @@ public class UserService {
     private UserConverter userConverter;
     @Autowired
     private FlightConverter flightConverter;
+    @Autowired
+    private RoleService roleService;
 
     public List<UserDto> getUserByName(String name) {
         LOGGER.log(Level.INFO, "getUserByName: " + name);
@@ -48,12 +52,16 @@ public class UserService {
     }
 
     public void addRoleToUser(Long id, String roleName) {
+        if (roleService.validateRole(roleName) == null) {
+            LOGGER.warn("Role {} is not valid", roleName);
+            throw new RoleNotFoundException(roleName);
+        }
+
         LOGGER.info("Adding role {} to user with id = {}", roleName, id);
-//        User user = userRepository.findByEmail(email).get();
         User user = userRepository.findById(id).get();
 
         Role role = roleRepository.findByName(roleName);
-        if(role == null){
+        if (role == null) {
             Role newRole = new Role();
             newRole.setName(roleName);
             roleRepository.save(newRole);
@@ -65,17 +73,40 @@ public class UserService {
         userRepository.save(user);
     }
 
-//    public UserDto bookFlight(String email, String flightId) {
+
+//    public void addRoleToUser(Long id, String roleName) {
+//        LOGGER.info("Adding role {} to user with id = {}", roleName, id);
+//        User user = userRepository.findById(id).get();
 //
-//        User user = userRepository.findByEmail(email).get();
-//        Flight flight = flightRepository.findByFlightNumber(flightId);
-//
-//        if (user != null && flight != null) {
-//            user.getFlights().add(flight);
-//            return userConverter.convertToDto(userRepository.save(user));
+//        Role role = roleRepository.findByName(roleName);
+//        if(role == null){
+//            Role newRole = new Role();
+//            newRole.setName(roleName);
+//            roleRepository.save(newRole);
+//            user.getRoles().add(newRole);
+//            userRepository.save(user);
+//            return;
 //        }
-//        return null;
+//        user.getRoles().add(role);
+//        userRepository.save(user);
 //    }
+
+    public UserDto bookFlight(String email, String flightId) {
+
+        User user = userRepository.findByEmail(email).get();
+        Flight flight = flightRepository.findByFlightNumber(flightId);
+
+        if (user != null && flight != null) {
+            user.getFlights().add(flight);
+            return userConverter.convertToDto(userRepository.save(user));
+        }
+        return null;
+    }
+
+    public UserDto findById(Long id) {
+        return userConverter.convertToDto(userRepository.findById(id).get());
+    }
+
 
 //    public List<UserDto> getUserByOther(String name) {
 //        return userRepository.findByOtherNameThatIWant(name)
