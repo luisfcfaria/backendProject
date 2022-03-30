@@ -28,7 +28,7 @@ public class Role {
     @Column(name = "ROLE_ID", nullable = false)
     private Long roleId;
     private String name;
-//
+
 //    @ManyToMany(mappedBy = "roles")
 //    @JsonIgnore
 //    private Collection<User> users;
