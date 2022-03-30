@@ -1,10 +1,11 @@
 package academy.mindswap.lms.commands;
 
+import academy.mindswap.lms.persistence.models.Role;
 import lombok.*;
-import org.springframework.jdbc.datasource.AbstractDriverBasedDataSource;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 
 @Getter
@@ -23,6 +24,7 @@ public class UserDto {
     @NotBlank( message= "Email cannot be empty")
     private String email;
     private Integer age;
+    private Set<Role> roles;
 
 
 }

@@ -2,12 +2,13 @@ package academy.mindswap.lms.services;
 
 import academy.mindswap.lms.commands.FlightDTO;
 import academy.mindswap.lms.converters.FlightConverter;
+import academy.mindswap.lms.persistence.models.Flight;
 import academy.mindswap.lms.persistence.repositories.FlightRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,9 +25,9 @@ public class FlightService {
     @Autowired
     private FlightRepository flightRepository;
 
-    public FlightDTO getFlightByNumber(String flightNumber) {
+    public FlightDTO getFlightByNumber(Integer flightNumber) {
 
-        return flightConverter.convertToDTO(flightRepository.findByFlightNumber(flightNumber));
+        return flightConverter.convertToDTO(flightRepository.findByFlightNumber(String.valueOf(flightNumber)));
     }
 
     public FlightDTO addFlight(FlightDTO flightDTO) {
@@ -75,8 +76,8 @@ public class FlightService {
 
     public FlightDTO updateFlight(FlightDTO flightDTO) {
 
-        Optional<FlightDTO> flight = Optional.ofNullable(flightRepository
-                .findByFlightNumber(flightDTO.getFlightNumber())).map(flightConverter::convertToDTO);
+        Optional<Flight> flight = Optional.ofNullable(flightRepository
+                .findByFlightNumber(flightConverter.convertToEntity(flightDTO).getFlightNumber()));
 
         if (flight.isPresent()) {
             LOGGER.log(Level.INFO, "Updating flight: " + flightDTO.getFlightNumber());

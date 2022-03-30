@@ -47,11 +47,21 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public void addRoleToUser(String email, String roleName) {
-        LOGGER.info("Adding role {} to user{}", roleName, email);
-        User user = userRepository.findByEmail(email).get();
+    public void addRoleToUser(Long id, String roleName) {
+        LOGGER.info("Adding role {} to user with id = {}", roleName, id);
+//        User user = userRepository.findByEmail(email).get();
+        User user = userRepository.findById(id).get();
+
         Role role = roleRepository.findByName(roleName);
-       // user.getRoles().add(role);
+        if(role == null){
+            Role newRole = new Role();
+            newRole.setName(roleName);
+            roleRepository.save(newRole);
+            user.getRoles().add(newRole);
+            userRepository.save(user);
+            return;
+        }
+        user.getRoles().add(role);
         userRepository.save(user);
     }
 
