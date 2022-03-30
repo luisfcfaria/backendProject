@@ -28,6 +28,21 @@ public class Role {
 //    @Column
     private Set<User> users;
 
-//    @OneToMany(mappedBy="role")
-//    private Set<User> users;
+
+//    public enum RoleEnum{
+//        ADMIN("admin"),
+//        USER("user"),
+//        GUEST("guest");
+//
+//        private String name;
+//
+//        RoleEnum(String name) {
+//            this.name = name;
+//        }
+//
+//        public String getName() {
+//            return name;
+//        }
+//    }
+
 }

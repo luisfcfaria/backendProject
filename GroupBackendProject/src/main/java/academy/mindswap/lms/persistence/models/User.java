@@ -46,13 +46,12 @@ public class User {
 //    @Column
 //    private Set<Role> roles;
 
-
-    //   @JsonIgnore
-//    @ManyToMany//(fetch = FetchType.EAGER)
-//    @JoinTable(name = "User_Flights", joinColumns = @JoinColumn(name = "userId"), //referencedColumnName = "userId"),
-//            inverseJoinColumns = @JoinColumn(name = "flight_number"))
-//    @Column
-//    private Set<Flight> flights;
+    @JsonIgnore
+    @ManyToMany//(fetch = FetchType.EAGER)
+    @JoinTable(name = "User_Flights", joinColumns = @JoinColumn(name = "userId"), //referencedColumnName = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "flight_number"))
+    @Column
+    private Set<Flight> flights;
 
     @JsonIgnore
     @ManyToMany

@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.management.relation.RoleNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
@@ -82,9 +83,16 @@ public class UserController {
     }
 
     @PostMapping("/role/addToUser/{id}")
-    public ResponseEntity<?> saveRole(@PathVariable Long id, @RequestBody String roleName){
+    public ResponseEntity<?> saveRole(@PathVariable Long id, @RequestBody String roleName) throws RoleNotFoundException {
 //        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("api/role/save").toUriString());
         userService.addRoleToUser(id, roleName);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/user/{userid}/bookflight")
+    public ResponseEntity<?> bookflight(@PathVariable Long userid, @RequestBody String flightNumber) throws RoleNotFoundException {
+        String userEmail= userService.findById(userid).getEmail();
+        userService.bookFlight(userEmail, flightNumber);
         return ResponseEntity.ok().build();
     }
 
