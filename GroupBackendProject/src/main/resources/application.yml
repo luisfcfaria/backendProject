@@ -14,7 +14,7 @@ spring:
       ddl-auto: ${HIBERNATE_DDL_AUTO:create-drop}
       show-sql: true
   datasource:
-    url: ${MARIADB_URL:jdbc:mariadb://localhost:3306/lms}
+    url: ${MARIADB_URL:jdbc:mariadb://localhost:3306/flight}
     username: ${MARIADB_USER:root}
     password: ${MARIADB_PASSWORD:mypass}
 

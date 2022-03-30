@@ -10,11 +10,11 @@ import lombok.*;
 public class FlightDTO {
 
     private String flightNumber;
-    private String departure;
-    private String arrival;
+    private String departureDate;
+    private String arrivalDate;
     private String departureTime;
     private String arrivalTime;
-    private String price;
-    private String airline;
+    private String departureAirport;
+    private String arrivalAirport;
 }
 

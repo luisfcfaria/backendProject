@@ -11,6 +11,8 @@ public class SetupDataLoader  {
 
     @Autowired
     private UserDataLoader userDataLoader;
+    @Autowired
+    private FlightDataLoader flightDataLoader;
 
     private boolean loaded = false;
 
@@ -26,6 +28,7 @@ public class SetupDataLoader  {
         System.out.println("ContextStoppedEvent or ContextRefreshedEvent");
         if (!loaded) {
             userDataLoader.loadData();
+            flightDataLoader.flightLoader();
             loaded = true;
         }
     }

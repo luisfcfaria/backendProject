@@ -20,7 +20,6 @@ public class PasswordController {
     private PasswordService passwordService;
 
 
-
     @PutMapping("{id}/password")
     public ResponseEntity<String> changePassword(@PathVariable("id") Integer id, @RequestBody PasswordDto passwordDto) {
         if(!Objects.equals(id, passwordDto.getIdUser())) {

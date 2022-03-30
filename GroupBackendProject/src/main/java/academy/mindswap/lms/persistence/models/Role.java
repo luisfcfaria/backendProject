@@ -6,9 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 
 
 @Getter
@@ -16,14 +14,8 @@ import java.util.Collection;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "roles")
-public class Role implements Serializable {
+public class Role {
 
-    private static final String GUEST = "GUEST";
-    private static final String USER = "USER";
-    private static final String ADMIN = "ADMIN";
-
-    @Serial
-    private static final long serialVersionUIS = 2L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,8 +23,11 @@ public class Role implements Serializable {
     private Long roleId;
     private String name;
 //
-//    @ManyToMany(mappedBy = "roles")
-//    @JsonIgnore
-//    private Collection<User> users;
+    @ManyToMany(mappedBy = "roles")
+    @JsonIgnore
+//    @Column
+    private Set<User> users;
 
+//    @OneToMany(mappedBy="role")
+//    private Set<User> users;
 }
