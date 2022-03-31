@@ -1,7 +1,9 @@
 package academy.mindswap.lms.services;
 
 import academy.mindswap.lms.commands.FlightDTO;
+import academy.mindswap.lms.commands.UserDto;
 import academy.mindswap.lms.converters.FlightConverter;
+import academy.mindswap.lms.converters.UserConverter;
 import academy.mindswap.lms.persistence.models.Flight;
 import academy.mindswap.lms.persistence.repositories.FlightRepository;
 import org.apache.logging.log4j.Level;
@@ -10,8 +12,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,11 +25,13 @@ public class FlightService {
 
     @Autowired
     private FlightConverter flightConverter;
+    @Autowired
+    private UserConverter userConverter;
 
     @Autowired
     private FlightRepository flightRepository;
 
-    public FlightDTO getFlightByNumber(Integer flightNumber) {
+    public FlightDTO getFlightByNumber(String flightNumber) {
 
         return flightConverter.convertToDTO(flightRepository.findByFlightNumber(String.valueOf(flightNumber)));
     }
@@ -94,5 +100,11 @@ public class FlightService {
         LOGGER.log(Level.INFO, "Deleting flight: " + flightNumber);
         flightRepository.deleteByFlightNumber(flightNumber);
         return null;
+    }
+
+    public List<UserDto> getPassengersPerFlight(String flightNumber) {
+       return flightRepository.findByFlightNumber(flightNumber).getUsers()
+               .stream()
+               .map(userConverter::convertToDto).collect(Collectors.toList());
     }
 }

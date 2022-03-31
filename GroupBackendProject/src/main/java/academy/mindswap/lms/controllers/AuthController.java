@@ -31,7 +31,6 @@ public class AuthController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-
         ResponseCookie cookie = ResponseCookie
                 .from(CookieFilter.AUTH_COOKIE,loginRequest.getEmail())
                 .secure(false)
