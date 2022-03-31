@@ -2,13 +2,15 @@ package academy.mindswap.lms.services;
 
 import academy.mindswap.lms.commands.LoginRequest;
 import academy.mindswap.lms.persistence.models.User;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class AuthenticationService {
 
-    private UserService userService;
+    private  UserService userService;
 
     public User login(LoginRequest loginRequest) {
         return userService.findByEmailAndPassword(loginRequest.getEmail(), loginRequest.getPassword());

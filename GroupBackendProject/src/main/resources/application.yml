@@ -1,5 +1,5 @@
 server:
-  port: ${SERVER_PORT:8080}
+  port: ${SERVER_PORT:8081}
 
 spring:
 
@@ -14,7 +14,7 @@ spring:
       ddl-auto: ${HIBERNATE_DDL_AUTO:create-drop}
       show-sql: true
   datasource:
-    url: ${MARIADB_URL:jdbc:mariadb://localhost:3306/flight}
+    url: ${MARIADB_URL:jdbc:mariadb://localhost:3306/mindswap}
     username: ${MARIADB_USER:root}
     password: ${MARIADB_PASSWORD:mypass}
 
