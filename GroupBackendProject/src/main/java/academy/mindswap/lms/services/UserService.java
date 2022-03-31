@@ -1,6 +1,7 @@
 package academy.mindswap.lms.services;
 
 import academy.mindswap.lms.annotations.MindswapAnnotation;
+import academy.mindswap.lms.commands.InsertUserDto;
 import academy.mindswap.lms.commands.UserDto;
 import academy.mindswap.lms.converters.FlightConverter;
 import academy.mindswap.lms.converters.UserConverter;
@@ -132,6 +133,15 @@ public class UserService {
                         ));
     }
 
+    public UserDto save(InsertUserDto userDto) {
+        return userConverter
+                .convertToDto(
+                        userRepository.save(
+                                userConverter.convertToEntity(userDto)
+                        ));
+    }
+
+
     public User login(String name, String password) {
         return userRepository.findByNameAndPassword(name, password);
     }
@@ -171,7 +181,7 @@ public class UserService {
         return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException(email));
     }
 
-    public User SignIn (UserDto userDto) {
+    public User SignIn (InsertUserDto userDto) {
     	User user = userConverter.convertToEntity(userDto);
     	return userRepository.save(user);
     }
