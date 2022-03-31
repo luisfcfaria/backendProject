@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.Collection;
 
 @Getter
 @Setter
@@ -31,8 +31,9 @@ public class Flight {
     @Column(name = "arrival_airport")
     private String arrivalAirport;
 
-//    @ManyToMany(mappedBy = "flight_user")
-//    @JsonIgnore
-//    private Set<User> users;
+
+    @ManyToMany(mappedBy = "flights")
+    @JsonIgnore
+    private Collection<User> users;
 
 }

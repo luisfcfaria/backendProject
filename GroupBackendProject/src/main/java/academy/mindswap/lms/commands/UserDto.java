@@ -25,6 +25,7 @@ public class UserDto {
     private String email;
     private Integer age;
     private Set<Role> roles;
+    private Set<FlightDTO> flights;
 
 
 }

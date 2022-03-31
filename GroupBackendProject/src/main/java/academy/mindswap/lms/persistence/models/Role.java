@@ -6,9 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 
 
 @Getter
@@ -18,19 +16,33 @@ import java.util.Collection;
 @Table(name = "roles")
 public class Role {
 
-    private static final String GUEST = "GUEST";
-    private static final String USER = "USER";
-    private static final String ADMIN = "ADMIN";
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ROLE_ID", nullable = false)
     private Long roleId;
     private String name;
+//
+    @ManyToMany(mappedBy = "roles")
+    @JsonIgnore
+//    @Column
+    private Set<User> users;
 
-//    @ManyToMany(mappedBy = "roles")
-//    @JsonIgnore
-//    private Collection<User> users;
+
+//    public enum RoleEnum{
+//        ADMIN("admin"),
+//        USER("user"),
+//        GUEST("guest");
+//
+//        private String name;
+//
+//        RoleEnum(String name) {
+//            this.name = name;
+//        }
+//
+//        public String getName() {
+//            return name;
+//        }
+//    }
 
 }
