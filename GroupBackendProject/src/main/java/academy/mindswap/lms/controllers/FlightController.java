@@ -1,16 +1,26 @@
 package academy.mindswap.lms.controllers;
 
+import academy.mindswap.lms.commands.BookFlightDto;
 import academy.mindswap.lms.commands.FlightDTO;
 import academy.mindswap.lms.commands.UserDto;
+import academy.mindswap.lms.persistence.models.User;
 import academy.mindswap.lms.services.FlightService;
+import academy.mindswap.lms.services.UserService;
+import org.hibernate.validator.constraints.Currency;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -19,6 +29,9 @@ public class FlightController {
 
     @Autowired
     private FlightService flightService;
+    @Autowired
+    private UserService userService;
+
 
     @GetMapping("/flights")
     public ResponseEntity<List<FlightDTO>> getFlights() {
@@ -54,6 +67,28 @@ public class FlightController {
         }
         return ResponseEntity.ok().body(flights);
     }
+
+
+
+   // @PutMapping("/user/{id}/bookflight/{flightNumber}")
+    @PostMapping("/flights/bookflight/")
+    //@PreAuthorize("hasRole('ROLE_BATATSUSER')")   //
+    @PreAuthorize("principal.idNumber == #bookFlightDto.passengerId")
+    public ResponseEntity<UserDto> bookFlight(@RequestBody BookFlightDto flightDTO, Principal principal) {
+
+        System.out.println( principal.getName() + "nnnnnnnnnnnnnnn");
+        return ResponseEntity.ok().body(userService.bookFlight(flightDTO));
+    }
+
+    @DeleteMapping("flights/bookflight/")
+    @PreAuthorize("principal.idNumber == #bookFlightDto.passengerId")
+    public ResponseEntity<UserDto> cancelFlight(@RequestBody BookFlightDto bookFlightDto, Principal principal) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println( ((User) auth.getPrincipal()).getIdNumber());
+
+        return ResponseEntity.ok().body(userService.cancelFlight(bookFlightDto));
+    }
+
 
     @PutMapping("/admin/updateflight")
     public ResponseEntity<FlightDTO> updateFlight(@RequestBody FlightDTO flightDTO, BindingResult bindingResult) {

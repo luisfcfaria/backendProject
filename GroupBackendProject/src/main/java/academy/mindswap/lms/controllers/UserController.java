@@ -1,10 +1,12 @@
 package academy.mindswap.lms.controllers;
 
 import academy.mindswap.lms.annotations.MindswapAnnotation;
+import academy.mindswap.lms.commands.FlightDTO;
 import academy.mindswap.lms.commands.InsertUserDto;
 import academy.mindswap.lms.commands.UserDto;
 import academy.mindswap.lms.persistence.models.User;
 //import academy.mindswap.lms.services.GitHubLookupService;
+import academy.mindswap.lms.services.FlightService;
 import academy.mindswap.lms.services.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +35,9 @@ public class UserController {
 
     @Autowired
     private final UserService userService;
+
+    @Autowired
+    private final FlightService flightService;
 
 //   // @Autowired
 //    private final GitHubLookupService gitHubLookupService;
@@ -65,6 +70,7 @@ public class UserController {
         }
         return new ResponseEntity<>(createdUserDto, HttpStatus.CREATED);
     }
+
 //
 //    @GetMapping("/search")
 //    public List<UserDto> getUserByName(@RequestParam(value = "name", defaultValue = "World") String name) {
@@ -85,18 +91,18 @@ public class UserController {
 //    }
 
     @PostMapping("/admin/changeUserRole/{userId}")
-    public ResponseEntity<?> saveRole(@PathVariable Long userId, @RequestBody String roleName) throws RoleNotFoundException {
+    public ResponseEntity<?> saveRole(@PathVariable String userEmail, @RequestBody String roleName) throws RoleNotFoundException {
 //        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("api/role/save").toUriString());
-        userService.addRoleToUser(userId, roleName);
+        userService.addRoleToUser(userEmail, roleName);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/user/{userid}/bookflight")
+  /*  @PostMapping("/user/{userid}/bookflight")
     public ResponseEntity<?> bookflight(@PathVariable Long userid, @RequestBody String flightNumber) throws RoleNotFoundException {
         String userEmail = userService.findById(userid).getEmail();
         userService.bookFlight(userEmail, flightNumber);
         return ResponseEntity.ok().build();
-    }
+    }*/
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody InsertUserDto userDto) throws RoleNotFoundException {

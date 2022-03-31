@@ -1,5 +1,6 @@
 package academy.mindswap.lms.commands;
 
+import academy.mindswap.lms.persistence.models.Flight;
 import academy.mindswap.lms.persistence.models.Role;
 import lombok.*;
 
@@ -18,14 +19,11 @@ public class UserDto {
 
     private Long idNumber;
     @NotBlank( message= "Name cannot be empty")
-//    private String firstName;
-//    private String lastName;
     private String name;
     @Email(message = "Invalid email address")
     @NotBlank( message= "Email cannot be empty")
     private String email;
     private Integer age;
-//    private String password;
     private Set<Role> roles;
     private Set<FlightDTO> flights;
 

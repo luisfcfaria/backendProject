@@ -34,7 +34,9 @@ public class User {
     @Column
     private Integer age;
     @Column
-    private Integer IdentificationNumber;
+    private Integer identificationNumber;
+    @Column
+    private String permissions;
 
 //    @Column
 //    private String location;
@@ -58,9 +60,13 @@ public class User {
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "userId"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
     private Set<Role> roles;
 
-//    @ManyToOne
-//    @JoinColumn(name="ROLE_ID", nullable=false)
-//    private Role role;
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "idNumber=" + idNumber +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }
 

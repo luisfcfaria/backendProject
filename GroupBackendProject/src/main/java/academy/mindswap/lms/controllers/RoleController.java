@@ -2,17 +2,16 @@
 //
 //import academy.mindswap.lms.commands.UserDto;
 //import academy.mindswap.lms.persistence.models.Role;
+//import academy.mindswap.lms.services.UserService;
 //import lombok.RequiredArgsConstructor;
 //import lombok.extern.slf4j.Slf4j;
+//import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.http.HttpStatus;
 //import org.springframework.http.ResponseEntity;
 //import org.springframework.validation.BindingResult;
-//import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.RequestBody;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RestController;
+//import org.springframework.web.bind.annotation.*;
 //
-//import javax.validation.Valid;
+//import java.util.Optional;
 //
 //@RestController
 //@RequestMapping("/api")
@@ -20,18 +19,8 @@
 //@Slf4j
 //public class RoleController {
 //
-//    @PostMapping("/role")
-//    public ResponseEntity<UserDto> createRole(@Valid @RequestBody Role role, BindingResult bindingResult) {
+//    @Autowired
+//    private UserService userService;
 //
-//        if(bindingResult.hasErrors()) {
-//            System.out.println("Error: " + bindingResult.getAllErrors());
-//            return ResponseEntity.badRequest().body(null);
 //
-//        }
-//        UserDto  createdUserDto = userService.save(userDto);
-//        if (createdUserDto == null) {
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//        return new ResponseEntity<>(createdUserDto, HttpStatus.CREATED);
-//    }
 //}

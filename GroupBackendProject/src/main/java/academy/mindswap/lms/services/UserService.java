@@ -1,6 +1,8 @@
 package academy.mindswap.lms.services;
 
 import academy.mindswap.lms.annotations.MindswapAnnotation;
+import academy.mindswap.lms.commands.BookFlightDto;
+import academy.mindswap.lms.commands.FlightDTO;
 import academy.mindswap.lms.commands.InsertUserDto;
 import academy.mindswap.lms.commands.UserDto;
 import academy.mindswap.lms.converters.FlightConverter;
@@ -52,14 +54,14 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public void addRoleToUser(Long id, String roleName) {
+    public void addRoleToUser(String email, String roleName) {
         if (roleService.validateRole(roleName) == null) {
             LOGGER.warn("Role {} is not valid", roleName);
             throw new RoleNotFoundException(roleName);
         }
 
-        LOGGER.info("Adding role {} to user with id = {}", roleName, id);
-        User user = userRepository.findById(id).get();
+        LOGGER.info("Adding role {} to user with id = {}", roleName, email);
+        User user = userRepository.findByEmail(email).get();
 
         Role role = roleRepository.findByName(roleName);
         if (role == null) {
@@ -74,38 +76,22 @@ public class UserService {
         userRepository.save(user);
     }
 
-//    public void addRoleToUser(Long id, String roleName) {
-//        LOGGER.info("Adding role {} to user with id = {}", roleName, id);
-//        User user = userRepository.findById(id).get();
-//
-//        Role role = roleRepository.findByName(roleName);
-//        if(role == null){
-//            Role newRole = new Role();
-//            newRole.setName(roleName);
-//            roleRepository.save(newRole);
-//            user.getRoles().add(newRole);
-//            userRepository.save(user);
-//            return;
-//        }
-//        user.getRoles().add(role);
-//        userRepository.save(user);
-//    }
+    public UserDto bookFlight(BookFlightDto flightDTO) {
 
-    public UserDto bookFlight(String email, String flightId) {
-
-        Optional<User> user = userRepository.findByEmail(email);
-        Flight flight = flightRepository.findByFlightNumber(flightId);
+        Optional<User> user = userRepository.findById(flightDTO.getPassengerId());
+        FlightDTO flight = flightConverter.convertToDTO(flightRepository.findByFlightNumber(flightDTO.getFlightNumber()));
 
         if (user.isPresent() && flight != null) {
-            user.get().getFlights().add(flight);
+            user.get().getFlights().add(flightConverter.convertToEntity(flight));
             return userConverter.convertToDto(userRepository.save(user.get()));
         }
         return null;
     }
 
-    public  UserDto cancelFlight(String email, String flightId) {
-        Optional<User> user = userRepository.findByEmail(email);
-        Flight flight = flightRepository.findByFlightNumber(flightId);
+    public UserDto cancelFlight(BookFlightDto bookFlightDto) {
+        Optional<User> user = userRepository.findById(bookFlightDto.getPassengerId());
+        Flight flight = flightRepository.findByFlightNumber(bookFlightDto.getFlightNumber());
+
         if (user.isPresent() && flight != null) {
             user.get().getFlights().remove(flight);
             return userConverter.convertToDto(userRepository.save(user.get()));
@@ -119,40 +105,30 @@ public class UserService {
         return userConverter.convertToDto(userRepository.findById(id).get());
     }
 
-//    public List<UserDto> getUserByOther(String name) {
-//        return userRepository.findByOtherNameThatIWant(name)
-//                .stream()
-//                .map(userConverter::convertToDto).collect(Collectors.toList());
-//    }
 
     public UserDto save(UserDto userDto) {
         return userConverter
-                .convertToDto(
-                        userRepository.save(
-                                userConverter.convertToEntity(userDto)
-                        ));
+                .convertToDto(userRepository
+                        .save(userConverter.convertToEntity(userDto)));
     }
 
     public UserDto save(InsertUserDto userDto) {
-        return userConverter
-                .convertToDto(
-                        userRepository.save(
-                                userConverter.convertToEntity(userDto)
-                        ));
+        return userConverter.convertToDto(
+                userRepository
+                        .save(userConverter.convertToEntity(userDto)));
     }
-
 
     public User login(String name, String password) {
         return userRepository.findByNameAndPassword(name, password);
     }
 
-    @MindswapAnnotation
-    public List<UserDto> getAllUsers() {
-
-        return userRepository.findAll()
-                .stream()
-                .map(userConverter::convertToDto).collect(Collectors.toList());
-    }
+//    @MindswapAnnotation
+//    public List<UserDto> getAllUsers() {
+//
+//        return userRepository.findAll()
+//                .stream()
+//                .map(userConverter::convertToDto).collect(Collectors.toList());
+//    }
 
 
     public Optional<UserDto> getUserById(long id) {
@@ -181,8 +157,8 @@ public class UserService {
         return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException(email));
     }
 
-    public User SignIn (InsertUserDto userDto) {
-    	User user = userConverter.convertToEntity(userDto);
-    	return userRepository.save(user);
+    public User SignIn(InsertUserDto userDto) {
+        User user = userConverter.convertToEntity(userDto);
+        return userRepository.save(user);
     }
 }

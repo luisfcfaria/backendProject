@@ -27,7 +27,6 @@ public class FlightService {
     private FlightConverter flightConverter;
     @Autowired
     private UserConverter userConverter;
-
     @Autowired
     private FlightRepository flightRepository;
 
@@ -107,4 +106,5 @@ public class FlightService {
                .stream()
                .map(userConverter::convertToDto).collect(Collectors.toList());
     }
+
 }
