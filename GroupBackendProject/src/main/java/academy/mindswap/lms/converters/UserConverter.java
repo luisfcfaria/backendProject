@@ -1,6 +1,7 @@
 package academy.mindswap.lms.converters;
 
 
+import academy.mindswap.lms.commands.InsertUserDto;
 import academy.mindswap.lms.commands.UserDto;
 import academy.mindswap.lms.persistence.models.User;
 import org.modelmapper.ModelMapper;
@@ -18,6 +19,13 @@ public class UserConverter {
     }
 
     public User convertToEntity(UserDto userDto) {
+        return modelMapper.map(userDto, User.class);
+    }
+
+    public InsertUserDto convertToInsertDto(User user) {
+        return modelMapper.map(user, InsertUserDto.class);
+    }
+    public User convertToEntity(InsertUserDto userDto) {
         return modelMapper.map(userDto, User.class);
     }
 

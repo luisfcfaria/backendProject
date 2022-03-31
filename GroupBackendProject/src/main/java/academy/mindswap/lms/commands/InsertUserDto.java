@@ -1,32 +1,22 @@
 package academy.mindswap.lms.commands;
 
-import academy.mindswap.lms.persistence.models.Role;
 import lombok.*;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.util.Set;
-
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserDto {
-
-
-    private Long idNumber;
+public class InsertUserDto {
     @NotBlank( message= "Name cannot be empty")
-//    private String firstName;
-//    private String lastName;
     private String name;
     @Email(message = "Invalid email address")
     @NotBlank( message= "Email cannot be empty")
     private String email;
     private Integer age;
-//    private String password;
-    private Set<Role> roles;
-    private Set<FlightDTO> flights;
-
+    private String password;
+    private Long identificationNumber;
 }

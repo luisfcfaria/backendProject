@@ -25,14 +25,14 @@ public class UserDataLoader {
         }*/
 
         LongConsumer operation = i ->{
-            User user = User.builder().idNumber(i).firstName("user"+i).email("user" + i + "@email.com").password(i+"pass"+i).build();
+            User user = User.builder().idNumber(i).name("user"+i).email("user" + i + "@email.com").password(i+"pass"+i).build();
             createIfNotFound(i, user);
         };
 
         reloadData(operation,20);
 
         LongConsumer operation2 = i ->{
-            User user = User.builder().idNumber(i).firstName("whatever"+i).email("whatever" + i + "@email.com").password(i+"whatever"+i).build();
+            User user = User.builder().idNumber(i).name("whatever"+i).email("whatever" + i + "@email.com").password(i+"whatever"+i).build();
             createIfNotFound(i, user);
         };
 

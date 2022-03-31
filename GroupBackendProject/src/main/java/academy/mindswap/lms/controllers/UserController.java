@@ -1,6 +1,7 @@
 package academy.mindswap.lms.controllers;
 
 import academy.mindswap.lms.annotations.MindswapAnnotation;
+import academy.mindswap.lms.commands.InsertUserDto;
 import academy.mindswap.lms.commands.UserDto;
 import academy.mindswap.lms.persistence.models.User;
 //import academy.mindswap.lms.services.GitHubLookupService;
@@ -98,7 +99,7 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signup(@RequestBody UserDto userDto) throws RoleNotFoundException {
+    public ResponseEntity<?> signup(@RequestBody InsertUserDto userDto) throws RoleNotFoundException {
         userService.save(userDto);
         return ResponseEntity.ok().build();
     }
