@@ -6,7 +6,7 @@ import academy.mindswap.lms.converters.FlightConverter;
 import academy.mindswap.lms.converters.UserConverter;
 import academy.mindswap.lms.exceptions.InvalidUserId;
 import academy.mindswap.lms.exceptions.UserNotFoundException;
-import academy.mindswap.lms.exceptions.error.RoleNotFoundException;
+import academy.mindswap.lms.exceptions.RoleNotFoundException;
 import academy.mindswap.lms.persistence.models.Flight;
 import academy.mindswap.lms.persistence.models.Role;
 import academy.mindswap.lms.persistence.models.User;
@@ -73,7 +73,6 @@ public class UserService {
         userRepository.save(user);
     }
 
-
 //    public void addRoleToUser(Long id, String roleName) {
 //        LOGGER.info("Adding role {} to user with id = {}", roleName, id);
 //        User user = userRepository.findById(id).get();
@@ -93,20 +92,31 @@ public class UserService {
 
     public UserDto bookFlight(String email, String flightId) {
 
-        User user = userRepository.findByEmail(email).get();
+        Optional<User> user = userRepository.findByEmail(email);
         Flight flight = flightRepository.findByFlightNumber(flightId);
 
-        if (user != null && flight != null) {
-            user.getFlights().add(flight);
-            return userConverter.convertToDto(userRepository.save(user));
+        if (user.isPresent() && flight != null) {
+            user.get().getFlights().add(flight);
+            return userConverter.convertToDto(userRepository.save(user.get()));
         }
         return null;
     }
 
+    public  UserDto cancelFlight(String email, String flightId) {
+        Optional<User> user = userRepository.findByEmail(email);
+        Flight flight = flightRepository.findByFlightNumber(flightId);
+        if (user.isPresent() && flight != null) {
+            user.get().getFlights().remove(flight);
+            return userConverter.convertToDto(userRepository.save(user.get()));
+        }
+        return null;
+    }
+
+
+    //CHECK DIFFERENCE BETWEEN THIS AND GET USER BY ID METHOD
     public UserDto findById(Long id) {
         return userConverter.convertToDto(userRepository.findById(id).get());
     }
-
 
 //    public List<UserDto> getUserByOther(String name) {
 //        return userRepository.findByOtherNameThatIWant(name)
@@ -159,5 +169,10 @@ public class UserService {
 
     public User findByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException(email));
+    }
+
+    public User SignIn (UserDto userDto) {
+    	User user = userConverter.convertToEntity(userDto);
+    	return userRepository.save(user);
     }
 }

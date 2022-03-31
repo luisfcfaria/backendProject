@@ -1,4 +1,4 @@
-package academy.mindswap.lms.exceptions.error;
+package academy.mindswap.lms.exceptions;
 
 public class RoleNotFoundException extends RuntimeException{
 

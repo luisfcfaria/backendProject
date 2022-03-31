@@ -1,6 +1,7 @@
 package academy.mindswap.lms.controllers;
 
 import academy.mindswap.lms.commands.FlightDTO;
+import academy.mindswap.lms.commands.UserDto;
 import academy.mindswap.lms.services.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,9 +29,9 @@ public class FlightController {
         return ResponseEntity.ok().body(flights);
     }
 
-    @GetMapping("/flights/{id}")
-    public ResponseEntity<FlightDTO> getFlight(@PathVariable Integer id) {
-        Optional<FlightDTO> flight = Optional.ofNullable(flightService.getFlightByNumber(id));
+    @GetMapping("/flights/{flightNumber}")
+    public ResponseEntity<FlightDTO> getFlight(@PathVariable String flightNumber) {
+        Optional<FlightDTO> flight = Optional.ofNullable(flightService.getFlightByNumber(flightNumber));
 
         return flight.map(flightDTO -> ResponseEntity.ok().body(flightDTO))
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -43,7 +45,6 @@ public class FlightController {
         }
         return ResponseEntity.ok().body(flights);
     }
-
 
     @GetMapping("/flights/destination/{destination}")
     public ResponseEntity<List<FlightDTO>> getFlightByDestination(@PathVariable String destination) {
@@ -86,5 +87,19 @@ public class FlightController {
         }
         return new ResponseEntity<>(flight, HttpStatus.OK);
     }
+
+    @GetMapping("/admin/passengers-per-flight/{flightNumber}")
+    public ResponseEntity<List<UserDto>> passengerList(@PathVariable String flightNumber) {
+        List<UserDto> passengers = flightService.getPassengersPerFlight(flightNumber);
+        if(passengers.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        if(flightService.getFlightByNumber(flightNumber) == null){
+            return ResponseEntity.badRequest().body(null);
+        }
+        return ResponseEntity.ok().body(passengers);
+    }
+
+
 }
 

@@ -16,7 +16,7 @@ import java.util.Set;
 public class UserDto {
 
 
-    private Integer idNumber;
+    private Long idNumber;
     @NotBlank( message= "Name cannot be empty")
     private String firstName;
     private String lastName;
@@ -26,6 +26,5 @@ public class UserDto {
     private Integer age;
     private Set<Role> roles;
     private Set<FlightDTO> flights;
-
 
 }

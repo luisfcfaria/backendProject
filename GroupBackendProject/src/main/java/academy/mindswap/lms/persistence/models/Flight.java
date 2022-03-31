@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -34,6 +35,6 @@ public class Flight {
 
     @ManyToMany(mappedBy = "flights")
     @JsonIgnore
-    private Collection<User> users;
+    private Set<User> users;
 
 }

@@ -20,9 +20,7 @@ public class RoleService {
     public Role validateRole(String roleName) {
 
         List<Role> roles = roleRepository.findAll();
-
-        System.out.println("------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>" + roles.get(0).getName());
-
+//        System.out.println("------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>" + roles.get(0).getName());
         return roles.stream()
                 .filter(role -> role.getName().equalsIgnoreCase(roleName))
                 .findFirst()
