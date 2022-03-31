@@ -15,8 +15,11 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class FlightController {
 
-    @Autowired
     private FlightService flightService;
+
+    public FlightController(FlightService flightservice){
+        this.flightService = flightservice;
+    }
 
     @GetMapping("/flights")
     public ResponseEntity<List<FlightDTO>> getFlights() {
@@ -44,10 +47,26 @@ public class FlightController {
         return ResponseEntity.ok().body(flights);
     }
 
+    @GetMapping("/flights/origin/{departureAirport}{date}")
+    public ResponseEntity<List<FlightDTO>> getFlightByOrigin(@PathVariable String departureAirport, String date){
+        List<FlightDTO> flights = flightService.getFlightByDeparture(departureAirport, date);
+        if (flights.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(flights);
+    }
 
     @GetMapping("/flights/destination/{destination}")
     public ResponseEntity<List<FlightDTO>> getFlightByDestination(@PathVariable String destination) {
         List<FlightDTO> flights = flightService.getFlightByArrival(destination);
+        if (flights.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(flights);
+    }
+    @GetMapping("/flights/destination/{destination}{date}")
+    public ResponseEntity<List<FlightDTO>> getFlightByDestination(@PathVariable String destination, String date){
+        List<FlightDTO> flights = flightService.getFlightByArrival(destination, date);
         if (flights.isEmpty()) {
             return ResponseEntity.notFound().build();
         }

@@ -91,13 +91,26 @@ public class UserService {
 //        userRepository.save(user);
 //    }
 
-    public UserDto bookFlight(String email, String flightId) {
+    public UserDto bookFlight(Long userId, String flightId) {
 
-        User user = userRepository.findByEmail(email).get();
+        Optional<User> optionalUser = userRepository.findById(userId);
         Flight flight = flightRepository.findByFlightNumber(flightId);
 
-        if (user != null && flight != null) {
+        if (optionalUser.isPresent() && flight != null) {
+            User user = optionalUser.get();
             user.getFlights().add(flight);
+            return userConverter.convertToDto(userRepository.save(user));
+        }
+        return null;
+    }
+
+    public UserDto cancelFlight(Long userId, String flightId){
+        Optional<User> optionalUser = userRepository.findById(userId);
+        Flight flight = flightRepository.findByFlightNumber(flightId);
+
+        if(optionalUser.isPresent() && flight != null){
+            User user = optionalUser.get();
+            user.getFlights().remove(flight);
             return userConverter.convertToDto(userRepository.save(user));
         }
         return null;

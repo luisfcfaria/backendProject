@@ -52,6 +52,15 @@ public class FlightService {
 
     }
 
+    public List<FlightDTO> getFlightByArrival(String arrival, String date){
+
+        return (flightRepository.findAll()
+        .stream()
+        .filter(i -> i.getArrivalAirport().equals(arrival) && i.getArrivalDate().equals(date))
+        .map(flightConverter::convertToDTO)
+        .collect(Collectors.toList()));
+    }
+
     public List<FlightDTO> getFlightByDeparture(String departure) {
 
         LOGGER.log(Level.INFO, "Getting flight by departure: " + departure);
@@ -61,6 +70,15 @@ public class FlightService {
                 .map(flightConverter::convertToDTO)
                 .collect(Collectors.toList()));
 
+    }
+
+    public List<FlightDTO> getFlightByDeparture(String arrival, String date){
+
+        return (flightRepository.findAll()
+        .stream()
+        .filter(i -> i.getDepartureAirport().equals(arrival) && i.getDepartureDate().equals(date))
+        .map(flightConverter::convertToDTO)
+        .collect(Collectors.toList()));
     }
 
     public List<FlightDTO> getAllFlights() {

@@ -89,10 +89,15 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/user/{userid}/bookflight")
-    public ResponseEntity<?> bookflight(@PathVariable Long userid, @RequestBody String flightNumber) throws RoleNotFoundException {
-        String userEmail= userService.findById(userid).getEmail();
-        userService.bookFlight(userEmail, flightNumber);
+    @PostMapping("/user/{userId}/book_flight")
+    public ResponseEntity<?> bookFlight(@PathVariable Long userId, @RequestBody String flightNumber) {
+        userService.bookFlight(userId, flightNumber);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/user/{userId}/cancel_flight")
+    public ResponseEntity<?> cancelFlight(@PathVariable Long userId, @RequestBody String flightNumber){
+        userService.cancelFlight(userId, flightNumber);
         return ResponseEntity.ok().build();
     }
 
