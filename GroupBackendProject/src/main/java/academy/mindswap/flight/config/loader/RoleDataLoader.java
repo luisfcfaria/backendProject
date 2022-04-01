@@ -17,9 +17,9 @@ public class RoleDataLoader {
         Role role2 = new Role();
         Role role3 = new Role();
 
-        role1.setName("admin");
-        role2.setName("guest");
-        role3.setName("user");
+        role1.setName("ADMIN");
+        role2.setName("GUEST");
+        role3.setName("USER");
 
         roleRepository.save(role1);
         roleRepository.save(role2);

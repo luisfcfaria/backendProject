@@ -1,4 +1,4 @@
-package academy.mindswap.flight.security.jwt;
+package academy.mindswap.flight.security;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -3,6 +3,7 @@ package academy.mindswap.flight.services;
 import academy.mindswap.flight.commands.BookFlightDto;
 import academy.mindswap.flight.commands.FlightDTO;
 import academy.mindswap.flight.commands.UserDto;
+import academy.mindswap.flight.converters.BookFlightConverter;
 import academy.mindswap.flight.converters.FlightConverter;
 import academy.mindswap.flight.converters.UserConverter;
 import academy.mindswap.flight.persistence.models.Flight;
@@ -27,16 +28,19 @@ public class BookFlightServiceImpl {
     private UserConverter userConverter;
     @Autowired
     private FlightConverter flightConverter;
+
+    @Autowired
+    private BookFlightConverter bookFlightConverter;
     @Autowired
     private RoleService roleService;
 
     public UserDto bookFlight(BookFlightDto flightDTO) {
 
         Optional<User> user = userRepository.findById(flightDTO.getPassengerId());
-        FlightDTO flight = flightConverter.convertToDTO(flightRepository.findByFlightNumber(flightDTO.getFlightNumber()));
+        BookFlightDto flight = bookFlightConverter.convertToDTO(flightRepository.findByFlightNumber(flightDTO.getFlightNumber()));
 
         if (user.isPresent() && flight != null) {
-            user.get().getFlights().add(flightConverter.convertToEntity(flight));
+            user.get().getFlights().add(bookFlightConverter.convertToEntity(flight));
             return userConverter.convertToDto(userRepository.save(user.get()));
         }
         return null;

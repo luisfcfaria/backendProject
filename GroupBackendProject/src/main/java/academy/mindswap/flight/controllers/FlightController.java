@@ -33,7 +33,7 @@ public class FlightController {
     private BookFlightServiceImpl bookFlightService;
 
 
-    @GetMapping("/flights")
+    @GetMapping("/flights/list")
     public ResponseEntity<List<FlightDTO>> getFlights() {
         List<FlightDTO> flights = flightService.getAllFlights();
         if (flights.isEmpty()) {
@@ -69,7 +69,7 @@ public class FlightController {
     }
 
 
-    @PreAuthorize("hasRole('USER') and isAuthenticated()")
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/flights/bookflight")
 //    @PreAuthorize("principal.idNumber == #bookFlightDto.passengerId")
     public ResponseEntity<UserDto> bookFlight(@RequestBody BookFlightDto flightDTO, Principal principal) {
@@ -88,7 +88,7 @@ public class FlightController {
     }
 
 
-    @PreAuthorize("hasRole('ADMIN') and isAuthenticated()")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("flights/updateflight")
     public ResponseEntity<FlightDTO> updateFlight(@RequestBody FlightDTO flightDTO, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
@@ -101,7 +101,7 @@ public class FlightController {
         return new ResponseEntity<>(flight, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ADMIN') and isAuthenticated()")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/flights/addflight")
     public ResponseEntity<FlightDTO> addFlight(@RequestBody FlightDTO flightDTO, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
@@ -114,7 +114,7 @@ public class FlightController {
         return new ResponseEntity<>(flight, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ADMIN') and isAuthenticated() ")
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/flights/deleteflight/{id}")
     public ResponseEntity<FlightDTO> deleteFlight(@PathVariable String id) {
         FlightDTO flight = flightService.deleteFlight(id);
@@ -124,7 +124,7 @@ public class FlightController {
         return new ResponseEntity<>(flight, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN') and isAuthenticated()")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/flights/passengers-per-flight/{flightNumber}")
     public ResponseEntity<List<UserDto>> passengerList(@PathVariable String flightNumber) {
         List<UserDto> passengers = flightService.getPassengersPerFlight(flightNumber);
