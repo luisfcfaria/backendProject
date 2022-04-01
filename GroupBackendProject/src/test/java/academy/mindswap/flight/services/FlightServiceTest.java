@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -193,6 +194,7 @@ class FlightServiceTest {
     }
 
 
+
     @Test
     void testGetFlightByDeparture() {
 
@@ -258,6 +260,7 @@ class FlightServiceTest {
         assertTrue(this.flightService.getFlightByDeparture("Departure").isEmpty());
         verify(this.flightRepository).findAll();
     }
+
 
 
     @Test
@@ -370,6 +373,7 @@ class FlightServiceTest {
         verify(this.flightRepository).save((Flight) any());
     }
 
+
     @Test
     @Disabled("TODO: Complete this test")
     void testUpdateFlight2() {
@@ -444,6 +448,7 @@ class FlightServiceTest {
         user.setIdNumber(1L);
         user.setIdentificationNumber(1);
         user.setName("Name");
+        user.setPassword("test");
         user.setPassword("iloveyou");
 //        user.setPermissions("Permissions");
         user.setRoles(new HashSet<>());
