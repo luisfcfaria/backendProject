@@ -21,6 +21,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,7 +37,6 @@ public class UserService {
     private RoleRepository roleRepository;
     @Autowired
     private FlightRepository flightRepository;
-
     @Autowired
     private UserConverter userConverter;
     @Autowired
@@ -98,13 +98,6 @@ public class UserService {
         return null;
     }
 
-
-    //CHECK DIFFERENCE BETWEEN THIS AND GET USER BY ID METHOD
-    public UserDto findById(Long id) {
-        return userConverter.convertToDto(userRepository.findById(id).get());
-    }
-
-
     public UserDto save(UserDto userDto) {
         return userConverter
                 .convertToDto(userRepository
@@ -112,23 +105,20 @@ public class UserService {
     }
 
     public UserDto save(InsertUserDto userDto) {
+        HashSet<Role> roles = new HashSet<>();
+        roles.add(roleRepository.findByName(Role.ROLE_USER));
+
+        User user = userConverter.convertToEntity(userDto);
+        user.setRoles(roles);
+
         return userConverter.convertToDto(
                 userRepository
-                        .save(userConverter.convertToEntity(userDto)));
+                        .save(user));
     }
 
     public User login(String name, String password) {
         return userRepository.findByNameAndPassword(name, password);
     }
-
-//    @MindswapAnnotation
-//    public List<UserDto> getAllUsers() {
-//
-//        return userRepository.findAll()
-//                .stream()
-//                .map(userConverter::convertToDto).collect(Collectors.toList());
-//    }
-
 
     public Optional<UserDto> getUserById(long id) {
 

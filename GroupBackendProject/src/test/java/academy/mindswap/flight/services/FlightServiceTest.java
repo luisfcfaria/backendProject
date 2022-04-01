@@ -445,7 +445,7 @@ class FlightServiceTest {
         user.setIdentificationNumber(1);
         user.setName("Name");
         user.setPassword("iloveyou");
-        user.setPermissions("Permissions");
+//        user.setPermissions("Permissions");
         user.setRoles(new HashSet<>());
 
         HashSet<User> userSet = new HashSet<>();

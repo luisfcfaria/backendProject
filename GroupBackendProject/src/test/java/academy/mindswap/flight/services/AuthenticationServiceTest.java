@@ -53,7 +53,7 @@ class AuthenticationServiceTest {
         user.setIdentificationNumber(1);
         user.setName("Name");
         user.setPassword("iloveyou");
-        user.setPermissions("Permissions");
+//        user.setPermissions("Permissions");
         user.setRoles(new HashSet<>());
         Optional<User> ofResult = Optional.of(user);
         when(this.userRepository.findByEmailAndPassword((String) any(), (String) any())).thenReturn(ofResult);
@@ -83,7 +83,7 @@ class AuthenticationServiceTest {
         user.setIdentificationNumber(1);
         user.setName("Name");
         user.setPassword("iloveyou");
-        user.setPermissions("Permissions");
+//        user.setPermissions("Permissions");
         user.setRoles(new HashSet<>());
         Optional<User> ofResult = Optional.of(user);
         when(this.userRepository.findByEmail((String) any())).thenReturn(ofResult);

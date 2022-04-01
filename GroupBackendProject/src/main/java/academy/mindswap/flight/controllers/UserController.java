@@ -30,24 +30,11 @@ public class UserController {
     @Autowired
     private final UserService userService;
 
-    @Autowired
-    private final FlightService flightService;
-
-//   // @Autowired
-//    private final GitHubLookupService gitHubLookupService;
-
-  /*  public UserController(UserService userService) {
-        this.userService = userService;
-    }*/
-
 
     @GetMapping("/user/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable Integer id) {
         Optional<UserDto> user = userService.getUserById(id);
-        if (user.isPresent()) {
-            return ResponseEntity.ok().body(user.get());
-        }
-        return ResponseEntity.notFound().build();
+        return user.map(userDto -> ResponseEntity.ok().body(userDto)).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/user")
@@ -65,38 +52,6 @@ public class UserController {
         return new ResponseEntity<>(createdUserDto, HttpStatus.CREATED);
     }
 
-//
-//    @GetMapping("/search")
-//    public List<UserDto> getUserByName(@RequestParam(value = "name", defaultValue = "World") String name) {
-//        log.info( "getUserByName: " + name);
-//        return  userService.getUserByName(name);
-//    }
-//
-//    @GetMapping("/find")
-//    public List<UserDto> getUserByNameIWant(@RequestParam(value = "name", defaultValue = "World") String name) {
-//        return  userService.getUserByOther(name);
-//    }
-
-//    @GetMapping("/users")
-//    @MindswapAnnotation
-//    public List<UserDto> getAllUsers() {
-//
-//        return  userService.getAllUsers();
-//    }
-
-    @PostMapping("/admin/changeUserRole/{userId}")
-    public ResponseEntity<?> saveRole(@PathVariable String userEmail, @RequestBody String roleName) throws RoleNotFoundException {
-//        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("api/role/save").toUriString());
-        userService.addRoleToUser(userEmail, roleName);
-        return ResponseEntity.ok().build();
-    }
-
-  /*  @PostMapping("/user/{userid}/bookflight")
-    public ResponseEntity<?> bookflight(@PathVariable Long userid, @RequestBody String flightNumber) throws RoleNotFoundException {
-        String userEmail = userService.findById(userid).getEmail();
-        userService.bookFlight(userEmail, flightNumber);
-        return ResponseEntity.ok().build();
-    }*/
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody InsertUserDto userDto) throws RoleNotFoundException {
@@ -104,82 +59,4 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-//    @GetMapping("/user/github/{githubId}")
-//    public User getGitHubUser(@PathVariable String githubId) throws ExecutionException, InterruptedException {
-//        System.out.println("before Github Id: " + githubId);
-//        CompletableFuture<User> user = gitHubLookupService.findUser(githubId);
-//        System.out.println("after Github Id: " + githubId);
-//        User userGit = user.get();
-//        System.out.println("end Github Id: " + githubId);
-//        return userGit;
-//       // return  gitHubLookupService.findUser(githubId);
-//    }
-//
-//    @GetMapping("/user/github/testing")
-//    public List<User> getGitHubTesting() throws ExecutionException, InterruptedException {
-//        long start = System.currentTimeMillis();
-//
-//        // Kick of multiple, asynchronous lookups
-//        CompletableFuture<User> page1 = gitHubLookupService.findUser("PivotalSoftware");
-//        CompletableFuture<User> page2 = gitHubLookupService.findUser("CloudFoundry");
-//        CompletableFuture<User> page3 = gitHubLookupService.findUser("Spring-Projects");
-//
-//        // Wait for the lookups to complete
-//        CompletableFuture.allOf(page1, page2, page3).join();
-//
-//        System.out.println(("Elapsed Time: " + (System.currentTimeMillis() - start)));
-//
-//
-//        List<User> users = List.of(page1.get(), page2.get(), page3.get());
-//
-//        return users;
-//        // return  gitHubLookupService.findUser(githubId);
-//    }
-/*
-    @GetMapping("/user")
-    public User  getUser() {
-     return   User.builder()
-                .email("j@jsd.com")
-                .name("j")
-                .build();
-
-     //   return new User("John", "Doe");
-    }
-    @GetMapping("/search")
-    public User getUserByName(@RequestParam(value = "name", defaultValue = "World") String name,
-                              @RequestParam(value = "lastname", defaultValue = "World") String lastname,
-                              @RequestParam(value = "email", defaultValue = "d@d.com") String email,
-                              @RequestParam(value = "name", defaultValue = "1") String id
-                              ) {
-        return  User.builder()
-                .id(1)
-                .email(email)
-                .name(name + " " + lastname + " " + id)
-                .build();
-        //   return new User("John", "Doe");
-    }
-
-
-    @PostMapping("/users")
-    public  List<User> newUsers( @RequestBody List<User> users) {
-       // user.setName(user.getName() + " Resposta" );
-
-        //Create a new users list
-
-        return users;
-    }
-
-    @DeleteMapping("/user/{id}")
-    public void deleteUser(@PathVariable Integer id) {
-        // delete user
-    }
-
-
-    @PutMapping("/user/{id}")
-    public User updateUser(@PathVariable Integer id, @RequestBody User user) {
-        user.setName(user.getName() + " Resposta" + id);
-        return user;
-    }
-
-*/
 }

@@ -52,7 +52,7 @@ class PasswordServiceTest {
         user.setIdentificationNumber(1);
         user.setName("Name");
         user.setPassword("iloveyou");
-        user.setPermissions("Permissions");
+//        user.setPermissions("Permissions");
         user.setRoles(new HashSet<>());
         Optional<User> ofResult = Optional.of(user);
 
@@ -64,7 +64,7 @@ class PasswordServiceTest {
         user1.setIdentificationNumber(1);
         user1.setName("Name");
         user1.setPassword("iloveyou");
-        user1.setPermissions("Permissions");
+//        user1.setPermissions("Permissions");
         user1.setRoles(new HashSet<>());
         when(this.userRepository.save((User) any())).thenReturn(user1);
         when(this.userRepository.findById(anyLong())).thenReturn(ofResult);
@@ -87,7 +87,7 @@ class PasswordServiceTest {
         user.setIdentificationNumber(1);
         user.setName("Name");
         user.setPassword("New Password Confirm");
-        user.setPermissions("Permissions");
+//        user.setPermissions("Permissions");
         user.setRoles(new HashSet<>());
         Optional<User> ofResult = Optional.of(user);
 
@@ -99,7 +99,7 @@ class PasswordServiceTest {
         user1.setIdentificationNumber(1);
         user1.setName("Name");
         user1.setPassword("iloveyou");
-        user1.setPermissions("Permissions");
+//        user1.setPermissions("Permissions");
         user1.setRoles(new HashSet<>());
         when(this.userRepository.save((User) any())).thenReturn(user1);
         when(this.userRepository.findById(anyLong())).thenReturn(ofResult);

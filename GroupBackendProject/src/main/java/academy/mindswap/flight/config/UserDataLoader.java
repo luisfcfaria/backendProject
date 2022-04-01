@@ -1,10 +1,14 @@
 package academy.mindswap.flight.config;
 
+import academy.mindswap.flight.persistence.models.Role;
 import academy.mindswap.flight.persistence.models.User;
+import academy.mindswap.flight.persistence.repositories.RoleRepository;
 import academy.mindswap.flight.persistence.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.nio.file.AccessDeniedException;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.function.LongConsumer;
 import java.util.stream.LongStream;
@@ -16,47 +20,24 @@ public class UserDataLoader {
     private UserRepository userRepository;
 
     public void loadData() {
-       /* userRepository.deleteAll();
-        for (int i = 1; i <= 10; i++) {
-            User user = User.builder().id(i).name("user"+i).email("user" + i + "@email").password(i+"pass"+i).build();
-            createIfNotFound(i, user);
-        }*/
 
-        LongConsumer operation = i ->{
-            User user = User.builder().idNumber(i).name("user"+i).email("user" + i + "@email.com").password(i+"pass"+i).build();
-            createIfNotFound(i, user);
-        };
+        userRepository.save(User.builder().idNumber(1009474392L).name("John Smith").email("jonh@email").password("pass1").age(50).build());
+        userRepository.save(User.builder().idNumber(548393092L).name("Alice Smith").email("alice@email").password("randompass").age(46).build());
+        userRepository.save(User.builder().idNumber(548393092L).name("Bob Smith").email("bob@email").password("lotsOfChars").age(46).build());
+        userRepository.save(User.builder().idNumber(548393092L).name("Charlie Smith").email("charlie@email").password("yesPlease").age(46).build());
+        userRepository.save(User.builder().idNumber(548393092L).name("David Smith").email("david@email").password("NoWay").age(46).build());
+        userRepository.save(User.builder().idNumber(548393092L).name("Eve Smith").email("Eve@email").password("22345").age(46).build());
+        userRepository.save(User.builder().idNumber(548393092L).name("Frank Smith").email("frank@email").password("tinnez_18").age(46).build());
+        userRepository.save(User.builder().idNumber(548393092L).name("George Smith").email("george@email").password("alheiras").age(46).build());
+        userRepository.save(User.builder().idNumber(548393092L).name("Harry Potter").email("harry@email").password("uihdwon").age(46).build());
+        userRepository.save(User.builder().idNumber(548393092L).name("Ivan Ivanov").email("ivan@email").password("oiwoqn").age(46).build());
+        userRepository.save(User.builder().idNumber(548393092L).name("John Doe").email("jonhD@email").password("asyuwosj").age(46).build());
+        userRepository.save(User.builder().idNumber(548393092L).name("Kate Smith").email("kate@email").password("tamosaqui").age(46).build());
+        userRepository.save(User.builder().idNumber(548393092L).name("Linda Smith").email("Linda@email").password("toucheiodisto").age(46).build());
 
-        reloadData(operation,20);
-
-        LongConsumer operation2 = i ->{
-            User user = User.builder().idNumber(i).name("whatever"+i).email("whatever" + i + "@email.com").password(i+"whatever"+i).build();
-            createIfNotFound(i, user);
-        };
-
-        reloadData(operation2,10);
 
     }
 
-    public void reloadData(LongConsumer operation, Integer end) {
-
-        LongStream.range(1, end).forEach(operation);
-    }
-
-    public void createIfNotFound(Long id, User userToSave) {
-        Optional<User> user = userRepository.findById(id);
-        user.ifPresentOrElse(
-                u -> {
-                    System.out.println("User already exists");
-                },
-                () -> {
-                    System.out.println("User not found, creating...");
-
-                    userRepository.save(userToSave);
-                }
-        );
-    }
-
-
-//
 }
+
+

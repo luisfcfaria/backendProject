@@ -65,19 +65,17 @@ public class FlightController {
     }
 
 
-
-   // @PutMapping("/user/{id}/bookflight/{flightNumber}")
-    @PostMapping("/flights/bookflight/")
-    //@PreAuthorize("hasRole('ROLE_BATATSUSER')")   //
-    @PreAuthorize("principal.idNumber == #bookFlightDto.passengerId")
+//    @PreAuthorize("hasRole('USER')")
+    @PostMapping("/flights/bookflight")
+//    @PreAuthorize("principal.idNumber == #bookFlightDto.passengerId")
     public ResponseEntity<UserDto> bookFlight(@RequestBody BookFlightDto flightDTO, Principal principal) {
 
-        System.out.println( principal.getName() + "nnnnnnnnnnnnnnn");
         return ResponseEntity.ok().body(userService.bookFlight(flightDTO));
     }
 
-    @DeleteMapping("flights/bookflight/")
-    @PreAuthorize("principal.idNumber == #bookFlightDto.passengerId")
+//    @PreAuthorize("principal.idNumber == #bookFlightDto.passengerId")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @DeleteMapping("flights/bookflight")
     public ResponseEntity<UserDto> cancelFlight(@RequestBody BookFlightDto bookFlightDto, Principal principal) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         System.out.println( ((User) auth.getPrincipal()).getIdNumber());
@@ -86,7 +84,8 @@ public class FlightController {
     }
 
 
-    @PutMapping("/admin/updateflight")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("flights/updateflight")
     public ResponseEntity<FlightDTO> updateFlight(@RequestBody FlightDTO flightDTO, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(null);
@@ -98,7 +97,8 @@ public class FlightController {
         return new ResponseEntity<>(flight, HttpStatus.CREATED);
     }
 
-    @PostMapping("/admin/addflight")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/flights/addflight")
     public ResponseEntity<FlightDTO> addFlight(@RequestBody FlightDTO flightDTO, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(null);
@@ -110,7 +110,8 @@ public class FlightController {
         return new ResponseEntity<>(flight, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/admin/deleteflight/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/flights/deleteflight/{id}")
     public ResponseEntity<FlightDTO> deleteFlight(@PathVariable String id) {
         FlightDTO flight = flightService.deleteFlight(id);
         if(flight == null) {
@@ -119,7 +120,8 @@ public class FlightController {
         return new ResponseEntity<>(flight, HttpStatus.OK);
     }
 
-    @GetMapping("/admin/passengers-per-flight/{flightNumber}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/flights/passengers-per-flight/{flightNumber}")
     public ResponseEntity<List<UserDto>> passengerList(@PathVariable String flightNumber) {
         List<UserDto> passengers = flightService.getPassengersPerFlight(flightNumber);
         if(passengers.isEmpty()) {

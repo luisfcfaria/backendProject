@@ -34,8 +34,6 @@ public class User {
     private Integer age;
     @Column
     private Integer identificationNumber;
-    @Column
-    private String permissions;
 
 //    @Column
 //    private String location;
