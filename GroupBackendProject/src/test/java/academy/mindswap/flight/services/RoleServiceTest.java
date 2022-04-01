@@ -47,7 +47,7 @@ class RoleServiceTest {
         Role role = new Role();
         role.setName("Can't add random roles!");
         role.setRoleId(123L);
-        role.setUsers(new HashSet<>());
+
 
         ArrayList<Role> roleList = new ArrayList<>();
         roleList.add(role);
@@ -77,12 +77,12 @@ class RoleServiceTest {
         Role role = new Role();
         role.setName("Can't add random roles!");
         role.setRoleId(123L);
-        role.setUsers(new HashSet<>());
+     //   role.setUsers(new HashSet<>());
 
         Role role1 = new Role();
         role1.setName("Can't add random roles!");
         role1.setRoleId(123L);
-        role1.setUsers(new HashSet<>());
+//           role1.setUsers(new HashSet<>());
 
         ArrayList<Role> roleList = new ArrayList<>();
         roleList.add(role1);

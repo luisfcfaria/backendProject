@@ -34,8 +34,6 @@ public class User {
     private Integer age;
     @Column
     private Integer identificationNumber;
-    @Column
-    private String permissions;
 
 //    @Column
 //    private String location;
@@ -55,7 +53,7 @@ public class User {
     private Set<Flight> flights;
 
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "userId"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
     private Set<Role> roles;
 
