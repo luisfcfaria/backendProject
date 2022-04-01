@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @SpringBootApplication
 @EnableAsync
 @EnableAspectJAutoProxy(proxyTargetClass=true)
+
 public class FlightApplication {
 
 	public static void main(String[] args) {
