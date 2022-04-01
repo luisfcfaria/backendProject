@@ -13,3 +13,6 @@ docker run -it --rm --link mymariadb  -p 8080:8080 users_service
 
 #TO run the APP in compose
 docker-compose up
+
+#TO APP documentation SWAGGER
+http://localhost:8080/swagger-ui/index.html
