@@ -1,15 +1,23 @@
 package academy.mindswap.flight.controllers;
 
 
+import academy.mindswap.flight.commands.AuthToken;
+import academy.mindswap.flight.commands.InsertUserDto;
 import academy.mindswap.flight.commands.LoginRequest;
+import academy.mindswap.flight.commands.UserDto;
+import academy.mindswap.flight.config.TokenProvider;
 import academy.mindswap.flight.persistence.models.User;
-import academy.mindswap.flight.security.CookieFilter;
-import academy.mindswap.flight.services.AuthenticationService;
+import academy.mindswap.flight.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseCookie;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,42 +28,38 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class AuthController {
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
-    private final AuthenticationService authService;
+    @Autowired
+    private TokenProvider jwtTokenUtil;
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest) {
+    @Autowired
+    private UserService userService;
 
-        User user = authService.login(loginRequest);
-        if (Objects.isNull(user)) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+    @PostMapping(value = "/authenticate")
+    public ResponseEntity<?> generateToken(@RequestBody LoginRequest loginUser)
+            throws AuthenticationException {
 
-        ResponseCookie cookie = ResponseCookie
-                .from(CookieFilter.AUTH_COOKIE,loginRequest.getEmail())
-                .secure(false)
-                .httpOnly(true)
-                .path("/")
-                .maxAge(60 * 60 * 24)
-                .build();
-        return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE,cookie.toString())
-                .body(user);
-
+        final Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginUser.getEmail(),
+                        loginUser.getPassword()
+                )
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        final String token = jwtTokenUtil.generateToken(authentication);
+        return ResponseEntity.ok(new AuthToken(token));
     }
 
-    @GetMapping("/logout")
-    public ResponseEntity<?> logout() {
-        //authService.logout(authCookie);
+    @RequestMapping(value="/register", method = RequestMethod.POST)
+    public UserDto saveUser(@RequestBody InsertUserDto user){
+        return userService.register(user);
+    }
 
-        ResponseCookie cookie = ResponseCookie.from(CookieFilter.AUTH_COOKIE,"")
-                .secure(false)
-                .httpOnly(true)
-                .path("/")
-                .maxAge(0)
-                .build();
-        return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE,cookie.toString())
-                .build();
+    @PreAuthorize("hasRole('USER')")
+    @RequestMapping(value="/userping", method = RequestMethod.GET)
+    public String userPing(){
+        return "Any User Can Read This";
     }
 }

@@ -32,9 +32,9 @@ public class UserController {
 
 
     @GetMapping("/user/{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable Integer id) {
-        Optional<UserDto> user = userService.getUserById(id);
-        return user.map(userDto -> ResponseEntity.ok().body(userDto)).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
+        UserDto user = userService.findById(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping("/user")
@@ -53,10 +53,5 @@ public class UserController {
     }
 
 
-    @PostMapping("/signup")
-    public ResponseEntity<?> signup(@RequestBody InsertUserDto userDto) throws RoleNotFoundException {
-        userService.save(userDto);
-        return ResponseEntity.ok().build();
-    }
 
 }

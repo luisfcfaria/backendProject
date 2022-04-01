@@ -1,4 +1,4 @@
-package academy.mindswap.flight.config;
+package academy.mindswap.flight.config.loader;
 
 import academy.mindswap.flight.persistence.models.Role;
 import academy.mindswap.flight.persistence.repositories.RoleRepository;

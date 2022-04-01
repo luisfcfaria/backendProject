@@ -4,6 +4,7 @@ import academy.mindswap.flight.commands.BookFlightDto;
 import academy.mindswap.flight.commands.FlightDTO;
 import academy.mindswap.flight.commands.UserDto;
 import academy.mindswap.flight.persistence.models.User;
+import academy.mindswap.flight.services.BookFlightServiceImpl;
 import academy.mindswap.flight.services.FlightService;
 import academy.mindswap.flight.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class FlightController {
     private FlightService flightService;
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private BookFlightServiceImpl bookFlightService;
 
 
     @GetMapping("/flights")
@@ -65,12 +69,12 @@ public class FlightController {
     }
 
 
-//    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') and isAuthenticated()")
     @PostMapping("/flights/bookflight")
 //    @PreAuthorize("principal.idNumber == #bookFlightDto.passengerId")
     public ResponseEntity<UserDto> bookFlight(@RequestBody BookFlightDto flightDTO, Principal principal) {
 
-        return ResponseEntity.ok().body(userService.bookFlight(flightDTO));
+        return ResponseEntity.ok().body(bookFlightService.bookFlight(flightDTO));
     }
 
 //    @PreAuthorize("principal.idNumber == #bookFlightDto.passengerId")
@@ -80,11 +84,11 @@ public class FlightController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         System.out.println( ((User) auth.getPrincipal()).getIdNumber());
 
-        return ResponseEntity.ok().body(userService.cancelFlight(bookFlightDto));
+        return ResponseEntity.ok().body(bookFlightService.cancelFlight(bookFlightDto));
     }
 
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') and isAuthenticated()")
     @PutMapping("flights/updateflight")
     public ResponseEntity<FlightDTO> updateFlight(@RequestBody FlightDTO flightDTO, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
@@ -97,7 +101,7 @@ public class FlightController {
         return new ResponseEntity<>(flight, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') and isAuthenticated()")
     @PostMapping("/flights/addflight")
     public ResponseEntity<FlightDTO> addFlight(@RequestBody FlightDTO flightDTO, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
@@ -110,7 +114,7 @@ public class FlightController {
         return new ResponseEntity<>(flight, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') and isAuthenticated() ")
     @DeleteMapping("/flights/deleteflight/{id}")
     public ResponseEntity<FlightDTO> deleteFlight(@PathVariable String id) {
         FlightDTO flight = flightService.deleteFlight(id);
@@ -120,7 +124,7 @@ public class FlightController {
         return new ResponseEntity<>(flight, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') and isAuthenticated()")
     @GetMapping("/flights/passengers-per-flight/{flightNumber}")
     public ResponseEntity<List<UserDto>> passengerList(@PathVariable String flightNumber) {
         List<UserDto> passengers = flightService.getPassengersPerFlight(flightNumber);

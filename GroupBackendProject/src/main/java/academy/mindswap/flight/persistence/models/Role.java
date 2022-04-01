@@ -26,10 +26,9 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ROLE_ID", nullable = false)
     private Long roleId;
+    @Column
     private String name;
-    @ManyToMany(mappedBy = "roles")
-    @JsonIgnore
-    private Set<User> users;
+
 
 
     public Role(String name) {

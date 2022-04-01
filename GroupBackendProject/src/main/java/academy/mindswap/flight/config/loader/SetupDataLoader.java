@@ -1,7 +1,9 @@
-package academy.mindswap.flight.config;
+package academy.mindswap.flight.config.loader;
+import academy.mindswap.flight.config.loader.FlightDataLoader;
+import academy.mindswap.flight.config.loader.RoleDataLoader;
+import academy.mindswap.flight.config.loader.UserDataLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.context.event.ContextStartedEvent;
 import org.springframework.context.event.ContextStoppedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;

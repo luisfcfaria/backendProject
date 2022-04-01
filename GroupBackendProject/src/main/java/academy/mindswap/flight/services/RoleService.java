@@ -31,4 +31,8 @@ public class RoleService {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Can't add random roles!"));
     }
+
+    public Role findByName(String role) {
+        return roleRepository.findByName(role);
+    }
 }

@@ -1,4 +1,4 @@
-package academy.mindswap.flight.config;
+package academy.mindswap.flight.config.loader;
 
 import academy.mindswap.flight.persistence.models.Flight;
 import academy.mindswap.flight.persistence.repositories.FlightRepository;
