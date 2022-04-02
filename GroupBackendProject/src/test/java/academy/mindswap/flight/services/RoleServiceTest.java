@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import academy.mindswap.flight.converters.UserConverter;
 import academy.mindswap.flight.persistence.models.Role;
 import academy.mindswap.flight.persistence.repositories.RoleRepository;
+import academy.mindswap.flight.persistence.repositories.UserRepository;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,6 +23,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ContextConfiguration(classes = {RoleService.class, UserConverter.class, ModelMapper.class})
 @ExtendWith(SpringExtension.class)
 class RoleServiceTest {
+    @MockBean
+    private UserRepository userRepository;
+
     @MockBean
     private RoleRepository roleRepository;
 
@@ -43,11 +47,11 @@ class RoleServiceTest {
     @Test
     void testValidateRole2() {
 
+
         // Arrange
         Role role = new Role();
         role.setName("Can't add random roles!");
         role.setRoleId(123L);
-
 
         ArrayList<Role> roleList = new ArrayList<>();
         roleList.add(role);
@@ -73,16 +77,15 @@ class RoleServiceTest {
     @Test
     void testValidateRole4() {
 
+
         // Arrange
         Role role = new Role();
         role.setName("Can't add random roles!");
         role.setRoleId(123L);
-     //   role.setUsers(new HashSet<>());
 
         Role role1 = new Role();
         role1.setName("Can't add random roles!");
         role1.setRoleId(123L);
-//           role1.setUsers(new HashSet<>());
 
         ArrayList<Role> roleList = new ArrayList<>();
         roleList.add(role1);
