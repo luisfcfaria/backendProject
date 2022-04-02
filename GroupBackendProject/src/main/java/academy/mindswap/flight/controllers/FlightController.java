@@ -78,11 +78,11 @@ public class FlightController {
     }
 
 //    @PreAuthorize("principal.idNumber == #bookFlightDto.passengerId")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('USER')")
     @DeleteMapping("flights/bookflight")
     public ResponseEntity<UserDto> cancelFlight(@RequestBody BookFlightDto bookFlightDto, Principal principal) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println( ((User) auth.getPrincipal()).getIdNumber());
+//        System.out.println( ((User) auth.getPrincipal()).getIdNumber());
 
         return ResponseEntity.ok().body(bookFlightService.cancelFlight(bookFlightDto));
     }
