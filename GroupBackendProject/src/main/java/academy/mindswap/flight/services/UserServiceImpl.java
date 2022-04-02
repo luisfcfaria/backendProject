@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.
                 findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException(email));
+                .orElseThrow(() -> new UserNotFoundException(userRepository.findByEmail(email).get().getIdNumber()));
         return new org.springframework.security
                 .core.userdetails.User(user.getEmail(), user.getPassword(), getAuthority(user));
     }
@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
                 convertToDto(
                         userRepository.
                                 findByEmail(email)
-                                .orElseThrow(() -> new UserNotFoundException(email)
+                                .orElseThrow(() -> new UserNotFoundException(userRepository.findByEmail(email).get().getIdNumber())
                                 )
                 );
     }

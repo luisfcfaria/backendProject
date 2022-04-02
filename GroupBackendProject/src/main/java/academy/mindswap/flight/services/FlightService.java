@@ -4,6 +4,7 @@ import academy.mindswap.flight.commands.FlightDTO;
 import academy.mindswap.flight.commands.UserDto;
 import academy.mindswap.flight.converters.FlightConverter;
 import academy.mindswap.flight.converters.UserConverter;
+import academy.mindswap.flight.exceptions.FlightNotFoundException;
 import academy.mindswap.flight.persistence.models.Flight;
 import academy.mindswap.flight.persistence.repositories.FlightRepository;
 import org.apache.logging.log4j.Level;
@@ -30,7 +31,7 @@ public class FlightService {
 
     public FlightDTO getFlightByNumber(String flightNumber) {
 
-        return flightConverter.convertToDTO(flightRepository.findByFlightNumber(String.valueOf(flightNumber)));
+        return flightConverter.convertToDTO(flightRepository.findByFlightNumber(String.valueOf(flightNumber)).get());
     }
 
     public FlightDTO addFlight(FlightDTO flightDTO) {
@@ -79,18 +80,17 @@ public class FlightService {
 
     public FlightDTO updateFlight(FlightDTO flightDTO) {
 
-        Optional<Flight> flight = Optional.ofNullable(flightRepository
-                .findByFlightNumber(flightConverter.convertToEntity(flightDTO).getFlightNumber()));
+        Flight flight = flightRepository
+                .findByFlightNumber(flightConverter.convertToEntity(flightDTO).getFlightNumber()).orElseThrow(
+                        () -> {
+                            LOGGER.log(Level.INFO, "Flight not found");
+                            return new FlightNotFoundException(flightDTO.getFlightNumber());
+                        });
 
-        if (flight.isPresent()) {
-            LOGGER.log(Level.INFO, "Updating flight: " + flightDTO.getFlightNumber());
-            FlightDTO updatedFlight = flightConverter.convertToDTO(flightRepository
-                    .save(flightConverter
-                            .convertToEntity(flightDTO)));
-            return updatedFlight;
-        } else {
-            return null;
-        }
+        LOGGER.log(Level.INFO, "Updating flight: " + flightDTO.getFlightNumber());
+        return flightConverter.convertToDTO(flightRepository
+                .save(flightConverter
+                        .convertToEntity(flightDTO)));
     }
 
     public FlightDTO deleteFlight(String flightNumber) {
@@ -100,9 +100,14 @@ public class FlightService {
     }
 
     public List<UserDto> getPassengersPerFlight(String flightNumber) {
-       return flightRepository.findByFlightNumber(flightNumber).getUsers()
-               .stream()
-               .map(userConverter::convertToDto).collect(Collectors.toList());
+        return flightRepository.findByFlightNumber(flightNumber)
+                .orElseThrow(() -> {
+                    LOGGER.log(Level.INFO, "Flight not found");
+                    return new FlightNotFoundException(flightNumber);
+                })
+                .getUsers()
+                .stream()
+                .map(userConverter::convertToDto).collect(Collectors.toList());
     }
 
 }

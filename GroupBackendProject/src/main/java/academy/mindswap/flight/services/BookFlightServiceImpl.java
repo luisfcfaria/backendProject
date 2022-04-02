@@ -6,16 +6,20 @@ import academy.mindswap.flight.commands.UserDto;
 import academy.mindswap.flight.converters.BookFlightConverter;
 import academy.mindswap.flight.converters.FlightConverter;
 import academy.mindswap.flight.converters.UserConverter;
+import academy.mindswap.flight.exceptions.FlightNotFoundException;
+import academy.mindswap.flight.exceptions.UserNotFoundException;
 import academy.mindswap.flight.persistence.models.Flight;
 import academy.mindswap.flight.persistence.models.User;
 import academy.mindswap.flight.persistence.repositories.FlightRepository;
 import academy.mindswap.flight.persistence.repositories.RoleRepository;
 import academy.mindswap.flight.persistence.repositories.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class BookFlightServiceImpl {
     @Autowired
@@ -28,33 +32,45 @@ public class BookFlightServiceImpl {
     private UserConverter userConverter;
     @Autowired
     private FlightConverter flightConverter;
-
     @Autowired
     private BookFlightConverter bookFlightConverter;
-    @Autowired
-    private RoleService roleService;
+//    @Autowired
+//    private RoleService roleService;
 
     public UserDto bookFlight(BookFlightDto flightDTO) {
 
-        Optional<User> user = userRepository.findById(flightDTO.getPassengerId());
-        BookFlightDto flight = bookFlightConverter.convertToDTO(flightRepository.findByFlightNumber(flightDTO.getFlightNumber()));
+        User user = userRepository.findById(flightDTO.getPassengerId())
+                .orElseThrow(() -> {
+                    log.error("User not found");
+                    return new UserNotFoundException(flightDTO.getPassengerId());
+                });
 
-        if (user.isPresent() && flight != null) {
-            user.get().getFlights().add(bookFlightConverter.convertToEntity(flight));
-            return userConverter.convertToDto(userRepository.save(user.get()));
-        }
-        return null;
+        Flight flight = flightRepository.findByFlightNumber(flightDTO.getFlightNumber())
+                .orElseThrow(() -> {
+                    log.error("Flight not found");
+                    return new FlightNotFoundException(flightDTO.getFlightNumber());
+                });
+
+        user.getFlights().add(flight);
+
+        return userConverter.convertToDto(userRepository.save(user));
     }
 
     public UserDto cancelFlight(BookFlightDto bookFlightDto) {
-        Optional<User> user = userRepository.findById(bookFlightDto.getPassengerId());
-        Flight flight = flightRepository.findByFlightNumber(bookFlightDto.getFlightNumber());
+        User user = userRepository.findById(bookFlightDto.getPassengerId())
+                .orElseThrow(() -> {
+                    log.error("User not found");
+                    return new UserNotFoundException(bookFlightDto.getPassengerId());
+                });
+        Flight flight = flightRepository.findByFlightNumber(bookFlightDto.getFlightNumber())
+                .orElseThrow(() -> {
+                    log.error("Flight not found");
+                    return new FlightNotFoundException(bookFlightDto.getFlightNumber());
+                });
 
-        if (user.isPresent() && flight != null) {
-            user.get().getFlights().remove(flight);
-            return userConverter.convertToDto(userRepository.save(user.get()));
-        }
-        return null;
+        user.getFlights().remove(flight);
+        
+        return userConverter.convertToDto(userRepository.save(user));
     }
 }
 

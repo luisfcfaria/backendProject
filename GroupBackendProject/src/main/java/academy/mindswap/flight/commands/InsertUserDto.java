@@ -17,15 +17,12 @@ public class InsertUserDto {
     @Email(message = "Invalid email address")
     @NotBlank( message= "Email cannot be empty")
     private String email;
-
-
-    @Size(min = 4, max = 8, message = "Password must be 4 characters long")
+    @Size(min = 4, max = 8, message = "Password must be at least 4 characters long")
     @NotBlank( message= "Password cannot be empty")
     private String password;
-    @Size(min = 4, max = 8, message = "Password must be 4 characters long")
+    @Size(min = 4, max = 8, message = "Password must be at least 4 characters long")
     @NotBlank( message= "Password cannot be empty")
     private String retypePassword;
-
     private Integer age;
     private Long identificationNumber;
 }

@@ -3,10 +3,12 @@ package academy.mindswap.flight.persistence.repositories;
 import academy.mindswap.flight.persistence.models.Flight;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface FlightRepository extends JpaRepository<Flight, String> {
-    Flight findByFlightNumber(String flightNumber);
+import java.util.Optional;
 
-    Flight findByArrivalAirport(String destination);
+public interface FlightRepository extends JpaRepository<Flight, String> {
+    Optional<Flight> findByFlightNumber(String flightNumber);
+
+    Optional<Flight> findByArrivalAirport(String destination);
 
     void deleteByFlightNumber(String flightNumber);
 }
