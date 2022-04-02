@@ -19,6 +19,7 @@ import academy.mindswap.flight.persistence.repositories.FlightRepository;
 import java.util.ArrayList;
 
 import java.util.HashSet;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Disabled;
 
@@ -53,7 +54,7 @@ class FlightServiceTest {
         flight.setDepartureTime("Departure Time");
         flight.setFlightNumber("42");
         flight.setUsers(new HashSet<>());
-        when(this.flightRepository.findByFlightNumber((String) any())).thenReturn(flight);
+        when(this.flightRepository.findByFlightNumber((String) any())).thenReturn(Optional.of(flight));
 
         // Act
         FlightDTO actualFlightByNumber = this.flightService.getFlightByNumber("42");
@@ -355,7 +356,7 @@ class FlightServiceTest {
         flight1.setFlightNumber("42");
         flight1.setUsers(new HashSet<>());
         when(this.flightRepository.save((Flight) any())).thenReturn(flight1);
-        when(this.flightRepository.findByFlightNumber((String) any())).thenReturn(flight);
+        when(this.flightRepository.findByFlightNumber((String) any())).thenReturn(Optional.of(flight));
 
         // Act
         FlightDTO actualUpdateFlightResult = this.flightService.updateFlight(new FlightDTO("42", "2020-03-01", "2020-03-01",
@@ -398,7 +399,7 @@ class FlightServiceTest {
         flight1.setFlightNumber("42");
         flight1.setUsers(new HashSet<>());
         when(this.flightRepository.save((Flight) any())).thenReturn(flight1);
-        when(this.flightRepository.findByFlightNumber((String) any())).thenReturn(flight);
+        when(this.flightRepository.findByFlightNumber((String) any())).thenReturn(Optional.of(flight));
 
         // Act
         this.flightService.updateFlight(null);
@@ -429,7 +430,7 @@ class FlightServiceTest {
         flight.setDepartureTime("Departure Time");
         flight.setFlightNumber("42");
         flight.setUsers(new HashSet<>());
-        when(this.flightRepository.findByFlightNumber((String) any())).thenReturn(flight);
+        when(this.flightRepository.findByFlightNumber((String) any())).thenReturn(Optional.of(flight));
 
         // Act and Assert
         assertTrue(this.flightService.getPassengersPerFlight("42").isEmpty());
@@ -465,7 +466,7 @@ class FlightServiceTest {
         flight.setDepartureTime("Departure Time");
         flight.setFlightNumber("42");
         flight.setUsers(userSet);
-        when(this.flightRepository.findByFlightNumber((String) any())).thenReturn(flight);
+        when(this.flightRepository.findByFlightNumber((String) any())).thenReturn(Optional.of(flight));
 
         // Act and Assert
         assertEquals(1, this.flightService.getPassengersPerFlight("42").size());
