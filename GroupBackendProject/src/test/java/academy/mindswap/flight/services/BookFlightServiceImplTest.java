@@ -82,7 +82,7 @@ class BookFlightServiceImplTest {
         flight.setDepartureTime("Departure Time");
         flight.setFlightNumber("42");
         flight.setUsers(new HashSet<>());
-        when(this.flightRepository.findByFlightNumber((String) any())).thenReturn(flight);
+        when(this.flightRepository.findByFlightNumber((String) any())).thenReturn(Optional.of(flight));
 
         BookFlightDto bookFlightDto = new BookFlightDto();
         bookFlightDto.setFlightNumber("42");
@@ -128,7 +128,7 @@ class BookFlightServiceImplTest {
         flight.setDepartureTime("Departure Time");
         flight.setFlightNumber("42");
         flight.setUsers(new HashSet<>());
-        when(this.flightRepository.findByFlightNumber((String) any())).thenReturn(flight);
+        when(this.flightRepository.findByFlightNumber((String) any())).thenReturn(Optional.of(flight));
 
         BookFlightDto bookFlightDto = new BookFlightDto();
         bookFlightDto.setFlightNumber("42");
@@ -175,7 +175,7 @@ class BookFlightServiceImplTest {
         flight.setDepartureTime("Departure Time");
         flight.setFlightNumber("42");
         flight.setUsers(new HashSet<>());
-        when(this.flightRepository.findByFlightNumber((String) any())).thenReturn(flight);
+        when(this.flightRepository.findByFlightNumber((String) any())).thenReturn(Optional.of(flight));
 
         BookFlightDto bookFlightDto = new BookFlightDto();
         bookFlightDto.setFlightNumber("42");
@@ -223,7 +223,7 @@ class BookFlightServiceImplTest {
         flight.setDepartureTime("Departure Time");
         flight.setFlightNumber("42");
         flight.setUsers(new HashSet<>());
-        when(this.flightRepository.findByFlightNumber((String) any())).thenReturn(flight);
+        when(this.flightRepository.findByFlightNumber((String) any())).thenReturn(Optional.of(flight));
 
         BookFlightDto bookFlightDto = new BookFlightDto();
         bookFlightDto.setFlightNumber("42");
