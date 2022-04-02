@@ -53,7 +53,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers(AUTH_LIST).permitAll()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/auth/authenticate", "/auth/register", "api/flights/list", "/api/flights/origin/*", "/api/flights/destination/*").permitAll()
+                .antMatchers("/auth/authenticate",
+                        "/auth/register",
+                        "/api/flights/origin/*",
+                        "/api/flights/list/*",
+                        "/api/flights/destination/*")
+                .permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint).and()
