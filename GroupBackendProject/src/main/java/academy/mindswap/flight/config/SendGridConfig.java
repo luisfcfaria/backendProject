@@ -1,4 +1,4 @@
-package academy.mindswap.flight.config.loader;
+package academy.mindswap.flight.config;
 
 import academy.mindswap.flight.gatewayemail.SendGridProperties;
 import com.sendgrid.SendGrid;
@@ -19,10 +19,6 @@ public class SendGridConfig {
 
     private final SendGridProperties sendGridProperties;
 
-//    /**
-//     * CORS configuration
-//     * @return {@link FilterRegistrationBean}
-//     */
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -33,16 +29,11 @@ public class SendGridConfig {
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
-
-//    /**
-//     * PasswordEncoder configuration
-//     * Set the password encoder we want to use returned a generic {@link PasswordEncoder}
-//     * @return {@link PasswordEncoder}
-//     */
-    @Bean
-    public PasswordEncoder getPasswordEncoder() {
-        return new BCryptPasswordEncoder(12);
-    }
+//
+//    @Bean
+//    public PasswordEncoder getPasswordEncoder() {
+//        return new BCryptPasswordEncoder(12);
+//    }
 
     @Bean
     public SendGrid getSendGrid() {

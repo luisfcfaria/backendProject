@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Data
 @Component
-@ConfigurationProperties(prefix = "platform.sendgrid")
+@ConfigurationProperties(prefix = "mailing.sendgrid")
 public class SendGridProperties {
 
     private String apiKey;

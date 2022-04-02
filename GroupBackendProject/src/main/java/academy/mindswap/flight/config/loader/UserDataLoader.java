@@ -38,20 +38,19 @@ public class UserDataLoader {
         rolesAdmins.add(roleAdmin);
 
 
-        userRepository.save(User.builder().idNumber(1009474392L).name("John Smith").email("jonh@email").password(passwordEncoder.encode("pass1")).age(50)
-                .roles(rolesSimple).build());
-        userRepository.save(User.builder().idNumber(548393092L).name("Alice Smith").email("alice@email").password(passwordEncoder.encode("randompass")).age(46).build());
-        userRepository.save(User.builder().idNumber(548393092L).name("Bob Smith").email("bob@email").password(passwordEncoder.encode( "lotsOfChars")).age(46).build());
-        userRepository.save(User.builder().idNumber(548393092L).name("Charlie Smith").email("charlie@email").password(passwordEncoder.encode("yesPlease")).age(46).build());
-        userRepository.save(User.builder().idNumber(548393092L).name("David Smith").email("david@email").password(passwordEncoder.encode("NoWay")).age(46).build());
-        userRepository.save(User.builder().idNumber(548393092L).name("Eve Smith").email("Eve@email").password(passwordEncoder.encode("22345")).age(46).build());
-        userRepository.save(User.builder().idNumber(548393092L).name("Frank Smith").email("frank@email").password(passwordEncoder.encode("tinnez_18")).age(46).build());
-        userRepository.save(User.builder().idNumber(548393092L).name("George Smith").email("george@email").password(passwordEncoder.encode("alheiras")).age(46).build());
-        userRepository.save(User.builder().idNumber(548393092L).name("Harry Potter").email("harry@email").password(passwordEncoder.encode("uihdwon")).age(46).build());
-        userRepository.save(User.builder().idNumber(548393092L).name("Ivan Ivanov").email("ivan@email").password(passwordEncoder.encode("oiwoqn")).age(46).build());
-        userRepository.save(User.builder().idNumber(548393092L).name("John Doe").email("jonhD@email").password(passwordEncoder.encode("asyuwosj")).age(46).build());
-        userRepository.save(User.builder().idNumber(548393092L).name("Kate Smith").email("kate@email").password(passwordEncoder.encode("tamosaqui")).age(46).build());
-        userRepository.save(User.builder().idNumber(548393092L).name("Linda Smith").email("Linda@email").password(passwordEncoder.encode("toucheiodisto")).age(46).build());
+        userRepository.save(User.builder().idNumber(1009474392L).name("John Smith").email("jonh@email").password(passwordEncoder.encode("pass1")).age(50).roles(rolesAdmins).build());
+        userRepository.save(User.builder().idNumber(548393092L).name("Alice Smith").email("alice@email").password(passwordEncoder.encode("randompass")).age(46).roles(rolesSimple).build());
+        userRepository.save(User.builder().idNumber(548393092L).name("Bob Smith").email("bob@email").password(passwordEncoder.encode( "lotsOfChars")).age(46).roles(rolesSimple).build());
+        userRepository.save(User.builder().idNumber(548393092L).name("Charlie Smith").email("charlie@email").password(passwordEncoder.encode("yesPlease")).roles(rolesSimple).age(46).build());
+        userRepository.save(User.builder().idNumber(548393092L).name("David Smith").email("david@email").password(passwordEncoder.encode("NoWay")).roles(rolesSimple).age(46).build());
+        userRepository.save(User.builder().idNumber(548393092L).name("Eve Smith").email("Eve@email").password(passwordEncoder.encode("22345")).age(46).roles(rolesSimple).build());
+        userRepository.save(User.builder().idNumber(548393092L).name("Frank Smith").email("frank@email").password(passwordEncoder.encode("tinnez_18")).roles(rolesSimple).age(46).build());
+        userRepository.save(User.builder().idNumber(548393092L).name("George Smith").email("george@email").password(passwordEncoder.encode("alheiras")).roles(rolesSimple).age(46).build());
+        userRepository.save(User.builder().idNumber(548393092L).name("Harry Potter").email("harry@email").password(passwordEncoder.encode("uihdwon")).roles(rolesSimple).age(46).build());
+        userRepository.save(User.builder().idNumber(548393092L).name("Ivan Ivanov").email("ivan@email").password(passwordEncoder.encode("oiwoqn")).roles(rolesSimple).age(46).build());
+        userRepository.save(User.builder().idNumber(548393092L).name("John Doe").email("jonhD@email").password(passwordEncoder.encode("asyuwosj")).roles(rolesSimple).age(46).build());
+        userRepository.save(User.builder().idNumber(548393092L).name("Kate Smith").email("kate@email").password(passwordEncoder.encode("tamosaqui")).roles(rolesSimple).age(46).build());
+        userRepository.save(User.builder().idNumber(548393092L).name("Linda Smith").email("Linda@email").password(passwordEncoder.encode("toucheiodisto")).roles(rolesSimple).age(46).build());
 
 
     }

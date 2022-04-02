@@ -17,45 +17,23 @@ public class FlightDataLoader {
 
 
     public void flightLoader(){
-       /* userRepository.deleteAll();
-        for (int i = 1; i <= 10; i++) {
-            User user = User.builder().id(i).name("user"+i).email("user" + i + "@email").password(i+"pass"+i).build();
-            createIfNotFound(i, user);
-        }*/
 
-        LongConsumer operation = i ->{
-            Flight flight = Flight.builder().flightNumber(""+ i).departureAirport("Airport"+i).arrivalAirport("Airport" + i + i).departureDate(i+"/"+i+"/"+i).arrivalDate(i+"/"+i+"/"+i).build();
-            createIfNotFound(i+"", flight);
-        };
+        flightRepository.save(Flight.builder().flightNumber("FR-001").departureDate("2022-09-01").departureTime("10:00").arrivalDate("2022-09-01").arrivalTime("12:00").departureAirport("LHR").arrivalAirport("OPO").build());
+        flightRepository.save(Flight.builder().flightNumber("FR-002").departureDate("2022-09-01").departureTime("10:00").arrivalDate("2022-09-01").arrivalTime("12:00").departureAirport("OPO").arrivalAirport("MAD").build());
+        flightRepository.save(Flight.builder().flightNumber("FR-003").departureDate("2022-09-01").departureTime("10:00").arrivalDate("2022-09-01").arrivalTime("12:00").departureAirport("MAD").arrivalAirport("LHR").build());
+        flightRepository.save(Flight.builder().flightNumber("FR-004").departureDate("2022-09-01").departureTime("10:00").arrivalDate("2022-09-01").arrivalTime("12:00").departureAirport("STN").arrivalAirport("NTE").build());
+        flightRepository.save(Flight.builder().flightNumber("FR-005").departureDate("2022-09-01").departureTime("10:00").arrivalDate("2022-09-01").arrivalTime("12:00").departureAirport("NTE").arrivalAirport("LHR").build());
+        flightRepository.save(Flight.builder().flightNumber("FR-006").departureDate("2022-09-01").departureTime("10:00").arrivalDate("2022-09-01").arrivalTime("12:00").departureAirport("LHR").arrivalAirport("STN").build());
+        flightRepository.save(Flight.builder().flightNumber("FR-007").departureDate("2022-09-01").departureTime("10:00").arrivalDate("2022-09-01").arrivalTime("12:00").departureAirport("STN").arrivalAirport("OPO").build());
+        flightRepository.save(Flight.builder().flightNumber("FR-008").departureDate("2022-09-01").departureTime("17:00").arrivalDate("2022-09-01").arrivalTime("19:00").departureAirport("OPO").arrivalAirport("NYC").build());
+        flightRepository.save(Flight.builder().flightNumber("FR-009").departureDate("2022-09-01").departureTime("17:00").arrivalDate("2022-09-01").arrivalTime("19:00").departureAirport("MAD").arrivalAirport("LHR").build());
+        flightRepository.save(Flight.builder().flightNumber("FR-010").departureDate("2022-09-01").departureTime("17:00").arrivalDate("2022-09-01").arrivalTime("19:00").departureAirport("LHR").arrivalAirport("STN").build());
+        flightRepository.save(Flight.builder().flightNumber("FR-011").departureDate("2022-09-01").departureTime("17:00").arrivalDate("2022-09-01").arrivalTime("19:00").departureAirport("STN").arrivalAirport("NTE").build());
+        flightRepository.save(Flight.builder().flightNumber("FR-012").departureDate("2022-09-01").departureTime("17:00").arrivalDate("2022-09-01").arrivalTime("19:00").departureAirport("NTE").arrivalAirport("LHR").build());
+        flightRepository.save(Flight.builder().flightNumber("FR-013").departureDate("2022-09-01").departureTime("17:00").arrivalDate("2022-09-01").arrivalTime("19:00").departureAirport("LHR").arrivalAirport("STN").build());
+        flightRepository.save(Flight.builder().flightNumber("FR-014").departureDate("2022-09-01").departureTime("17:00").arrivalDate("2022-09-01").arrivalTime("19:00").departureAirport("STN").arrivalAirport("OPO").build());
+        flightRepository.save(Flight.builder().flightNumber("FR-015").departureDate("2022-09-01").departureTime("17:00").arrivalDate("2022-09-01").arrivalTime("19:00").departureAirport("OPO").arrivalAirport("LAX").build());
 
-        reloadData(operation,20);
-
-        LongConsumer operation2 = i ->{
-            Flight flight = Flight.builder().flightNumber(""+ i).departureAirport("Airport"+i).arrivalAirport("Airport" + i + i).departureDate(i+"/"+i+"/"+i).arrivalDate(i+"/"+i+"/"+i).build();
-            createIfNotFound(i+"", flight);
-        };
-
-        reloadData(operation2,10);
-
-        //IntStream.range(1, 100).forEach(operation);
-    }
-
-    public void reloadData(LongConsumer operation, Integer end) {
-
-        LongStream.range(1, end).forEach(operation);
-    }
-    public void createIfNotFound(String id, Flight userToSave) {
-        Optional<Flight> user = flightRepository.findById(id);
-        user.ifPresentOrElse(
-                u -> {
-                    System.out.println("User already exists");
-                },
-                () -> {
-                    System.out.println("User not found, creating...");
-
-                    flightRepository.save(userToSave);
-                }
-        );
     }
 
 }

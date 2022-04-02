@@ -9,8 +9,8 @@ import java.util.Map;
 @Data
 @Component
 @ConfigurationProperties(prefix = "platform.email")
-public class EmailProperties {
 
+public class EmailProperties {
     private Map<String, String> sendgridTemplates;
-    private Map<String, String> brazeTemplates;
+//    private Map<String, String> brazeTemplates;
 }

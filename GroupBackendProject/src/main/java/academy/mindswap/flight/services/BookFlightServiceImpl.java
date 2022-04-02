@@ -1,6 +1,7 @@
 package academy.mindswap.flight.services;
 
 import academy.mindswap.flight.commands.BookFlightDto;
+import academy.mindswap.flight.commands.EmailData;
 import academy.mindswap.flight.commands.FlightDTO;
 import academy.mindswap.flight.commands.UserDto;
 import academy.mindswap.flight.converters.BookFlightConverter;
@@ -8,6 +9,8 @@ import academy.mindswap.flight.converters.FlightConverter;
 import academy.mindswap.flight.converters.UserConverter;
 import academy.mindswap.flight.exceptions.FlightNotFoundException;
 import academy.mindswap.flight.exceptions.UserNotFoundException;
+import academy.mindswap.flight.gatewayemail.EmailTemplate;
+import academy.mindswap.flight.gatewayemail.SendGridGateway;
 import academy.mindswap.flight.persistence.models.Flight;
 import academy.mindswap.flight.persistence.models.User;
 import academy.mindswap.flight.persistence.repositories.FlightRepository;
@@ -34,8 +37,9 @@ public class BookFlightServiceImpl {
     private FlightConverter flightConverter;
     @Autowired
     private BookFlightConverter bookFlightConverter;
-//    @Autowired
-//    private RoleService roleService;
+    @Autowired
+    private EmailServiceImpl emailService;
+
 
     public UserDto bookFlight(BookFlightDto flightDTO) {
 
@@ -52,7 +56,13 @@ public class BookFlightServiceImpl {
                 });
 
         user.getFlights().add(flight);
+        emailService.sendEmail(
+                EmailData.builder()
+                .email(user.getEmail())
+                        .build(),
+                EmailTemplate.BOOKED_FLIGHT);
 
+//        sendGridGateway.sendEmail(user.getEmail(), EmailTemplate.BOOKED_FLIGHT, EmailTemplate.BOOKED_FLIGHT);
         return userConverter.convertToDto(userRepository.save(user));
     }
 
