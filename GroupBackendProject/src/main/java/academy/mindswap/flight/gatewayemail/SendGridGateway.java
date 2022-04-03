@@ -47,7 +47,7 @@ public class SendGridGateway implements EmailGateway {
         personalization.addTo(to);
 
         Mail mail = new Mail();
-        mail.setTemplateId(EmailTemplate.CANCELED_FLIGHT.getName());
+        mail.setTemplateId(EmailTemplate.WELCOME_EMAIL.getName());
         mail.setFrom(from);
         mail.addPersonalization(personalization);
 

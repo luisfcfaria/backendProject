@@ -12,5 +12,4 @@ import java.util.Map;
 
 public class EmailProperties {
     private Map<String, String> sendgridTemplates;
-//    private Map<String, String> brazeTemplates;
 }

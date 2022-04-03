@@ -13,7 +13,7 @@ import java.util.Map;
 @Service
 public class EmailServiceImpl implements EmailService {
 
-    @Value("${platforn.fe.baseUrl:baseUrl}")
+
     private String baseAppUrl;
 
     private final EmailGateway emailGateway;
