@@ -29,7 +29,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             // -- swagger ui
             "/v3/api-docs/**",
             "/swagger-ui/**",
-            "/swagger-ui.html"
+            "/swagger-ui.html",
+            // -- no login endpoints
+            "/auth/authenticate",
+            "/auth/register",
+            "/api/flights/origin/*",
+            "/api/flights/list/*",
+            "/api/flights/destination/*"
     };
 
 
@@ -53,12 +59,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers(AUTH_LIST).permitAll()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/auth/authenticate",
-                        "/auth/register",
-                        "/api/flights/origin/*",
-                        "/api/flights/list/*",
-                        "/api/flights/destination/*")
-                .permitAll()
+//                .antMatchers("/auth/authenticate",
+//                        "/auth/register",
+//                        "/api/flights/origin/*",
+//                        "/api/flights/list/*",
+//                        "/api/flights/destination/*")
+//                .permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint).and()

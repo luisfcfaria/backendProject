@@ -12,13 +12,6 @@ import java.util.Optional;
 public class LoggingAspect {
 
 
-
-
-
-
-
-   // MsLogger logger = new MsLogger();
-
     @Pointcut("@annotation( academy.mindswap.flight.annotations.MindswapAnnotation)")
     public void mindswapAnnotation() {}
 

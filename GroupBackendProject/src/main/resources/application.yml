@@ -31,5 +31,5 @@ jwt:
 
 mailing:
   sendgrid:
-    api-key:
+    api-key: ${SENDGRID_KEY}
     enabled: true

@@ -28,7 +28,6 @@ public class FlightController {
     private FlightService flightService;
     @Autowired
     private UserService userService;
-
     @Autowired
     private BookFlightServiceImpl bookFlightService;
 
@@ -78,11 +77,11 @@ public class FlightController {
     }
 
 //    @PreAuthorize("principal.idNumber == #bookFlightDto.passengerId")
-    @PreAuthorize("hasRole('USER') and @authorized.isUser(#userId)")
-    @DeleteMapping("/users/{userId}/books/{flightId}")
-    public ResponseEntity<UserDto> cancelFlight(@RequestBody BookFlightDto bookFlightDto, @PathVariable Long userId, @PathVariable String flightId) {
+    @PreAuthorize("hasRole('USER')")
+    @DeleteMapping("/flights/bookflight")
+    public ResponseEntity<UserDto> cancelFlight(@RequestBody BookFlightDto bookFlightDto) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        System.out.println( ((User) auth.getPrincipal()).getIdNumber());
+        System.out.println(auth.getName());
         return ResponseEntity.ok().body(bookFlightService.cancelFlight(bookFlightDto));
     }
 
