@@ -1,6 +1,6 @@
 package academy.mindswap.flight.security;
 
-import academy.mindswap.flight.commands.PrincipalDto;
+//import academy.mindswap.flight.commands.PrincipalDto;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 

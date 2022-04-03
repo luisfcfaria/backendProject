@@ -38,7 +38,7 @@ public class BookFlightServiceImpl {
     @Autowired
     private BookFlightConverter bookFlightConverter;
     @Autowired
-    private EmailServiceImpl emailService;
+    private SendGridGateway emailGateway;
 
 
     public UserDto bookFlight(BookFlightDto flightDTO) {
@@ -56,11 +56,12 @@ public class BookFlightServiceImpl {
                 });
 
         user.getFlights().add(flight);
-        emailService.sendEmail(
-                EmailData.builder()
-                .email(user.getEmail())
-                        .build(),
-                EmailTemplate.BOOKED_FLIGHT);
+        emailGateway.sendEmail(user.getEmail(), user.getName(), EmailTemplate.BOOKED_FLIGHT);
+//        emailService.sendEmail(
+//                EmailData.builder()
+//                .email(user.getEmail())
+//                        .build(),
+//                EmailTemplate.BOOKED_FLIGHT);
 
 //        sendGridGateway.sendEmail(user.getEmail(), EmailTemplate.BOOKED_FLIGHT, EmailTemplate.BOOKED_FLIGHT);
         return userConverter.convertToDto(userRepository.save(user));
@@ -78,7 +79,14 @@ public class BookFlightServiceImpl {
                     return new FlightNotFoundException(bookFlightDto.getFlightNumber());
                 });
 
+
         user.getFlights().remove(flight);
+        emailGateway.sendEmail(user.getEmail(), user.getName(), EmailTemplate.CANCELED_FLIGHT);
+//        emailService.sendEmail(
+//                EmailData.builder()
+//                        .email(user.getEmail())
+//                        .build(),
+//                EmailTemplate.CANCELED_FLIGHT);
         
         return userConverter.convertToDto(userRepository.save(user));
     }

@@ -57,9 +57,9 @@ public class AuthController {
         return userService.register(user);
     }
 
-    @PreAuthorize("hasRole('USER')")
-    @RequestMapping(value="/userping", method = RequestMethod.GET)
-    public String userPing(){
-        return "Any User Can Read This";
-    }
+//    @PreAuthorize("hasRole('USER')")
+//    @RequestMapping(value="/userping", method = RequestMethod.GET)
+//    public String userPing(){
+//        return "Any User Can Read This";
+//    }
 }

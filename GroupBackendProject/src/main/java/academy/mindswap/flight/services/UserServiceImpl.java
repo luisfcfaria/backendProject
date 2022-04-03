@@ -1,10 +1,14 @@
 package academy.mindswap.flight.services;
 
+import academy.mindswap.flight.commands.EmailData;
 import academy.mindswap.flight.commands.InsertUserDto;
 import academy.mindswap.flight.commands.UserDto;
 import academy.mindswap.flight.converters.UserConverter;
 import academy.mindswap.flight.exceptions.InvalidUserId;
 import academy.mindswap.flight.exceptions.UserNotFoundException;
+import academy.mindswap.flight.gatewayemail.EmailGateway;
+import academy.mindswap.flight.gatewayemail.EmailTemplate;
+import academy.mindswap.flight.gatewayemail.SendGridGateway;
 import academy.mindswap.flight.persistence.models.Role;
 import academy.mindswap.flight.persistence.models.User;
 import academy.mindswap.flight.persistence.repositories.UserRepository;
@@ -37,6 +41,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     private RoleService roleService;
     @Autowired
     private BCryptPasswordEncoder bcryptEncoder;
+//    @Autowired
+//    private EmailServiceImpl emailService;
+    @Autowired
+    private EmailGateway emailGateway;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -73,6 +81,14 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         roleSet.add(role);
         userEntity.setRoles(roleSet);
         User newUser =  userRepository.save(userEntity);
+
+        emailGateway.sendEmail(newUser.getEmail(), newUser.getName(), EmailTemplate.WELCOME_EMAIL);
+
+//        emailService.sendEmail(
+//                EmailData.builder()
+//                        .email(user.getEmail())
+//                        .build(),
+//                EmailTemplate.WELCOME_EMAIL);
 
         return userConverter.convertToDto(newUser);
     }

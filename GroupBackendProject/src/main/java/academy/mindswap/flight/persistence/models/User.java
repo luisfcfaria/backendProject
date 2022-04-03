@@ -35,15 +35,6 @@ public class User {
     @Column
     private Integer identificationNumber;
 
-//    @Column
-//    private String location;
-//
-//    @JsonIgnore
-//    @ManyToMany//(fetch = FetchType.EAGER)
-//    @JoinTable(name = "roles", joinColumns =@JoinColumn(name = "userId"/*, referencedColumnName = "userId"*/),
-//            inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
-//    @Column
-//    private Set<Role> roles;
 
     @JsonIgnore
     @ManyToMany//(fetch = FetchType.EAGER)
