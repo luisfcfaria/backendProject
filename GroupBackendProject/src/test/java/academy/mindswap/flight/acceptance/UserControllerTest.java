@@ -35,7 +35,7 @@ public class UserControllerTest {
         //GIVEN
         User user = MockData.getUser();
         when(userRepository.findById(3L)).thenReturn(Optional.of(user));
-        String path = "/users/3";
+        String path = "/user/3";
 
         //WHEN
         ResponseEntity<UserDto> response = restTemplate.exchange(
@@ -49,6 +49,8 @@ public class UserControllerTest {
       //  verify(userRepository, times(1)).findById(anyLong());
         UserDto expected = MockData.getUserDto(user);
         assertEquals(expected, response.getBody());
+
+
 
     }
 }
