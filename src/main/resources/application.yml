@@ -1,0 +1,30 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+
+  output:
+    ansi:
+      enabled: ALWAYS
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDB103Dialect
+    hibernate:
+      ddl-auto: ${HIBERNATE_DDL_AUTO:create-drop}
+      show-sql: true
+  datasource:
+    url: ${MARIADB_URL:jdbc:mariadb://ms-2nd-edition-groups-db00006104.mdb0002418.db.skysql.net:5003/group3?useSSL=true&trustServerCertificate=true}
+    username: ${MARIADB_USERNAME:group3}
+    password: ${MARIADB_PASSWORD:Group3Password!}
+jwt:
+  token:
+    validity: 18000
+    prefix: Bearer
+  signing:
+    key: signingkey
+  authorities:
+    key: roles
+  header:
+    string: Authorization
+
