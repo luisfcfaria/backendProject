@@ -27,4 +27,8 @@ jwt:
     key: roles
   header:
     string: Authorization
+mailing:
+  sendgrid:
+    apikey: ${SENDGRID_API_KEY}
+    enabled: true
 
