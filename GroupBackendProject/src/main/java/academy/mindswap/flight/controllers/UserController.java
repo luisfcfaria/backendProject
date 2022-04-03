@@ -24,9 +24,6 @@ import java.util.Optional;
 @Slf4j
 public class UserController {
 
-    //  private static final Logger LOGGER = LogManager.getLogger(UserController.class);
-
-
     @Autowired
     private final UserService userService;
 

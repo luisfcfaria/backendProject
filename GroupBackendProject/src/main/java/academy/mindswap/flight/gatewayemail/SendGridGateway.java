@@ -47,7 +47,7 @@ public class SendGridGateway implements EmailGateway {
         personalization.addTo(to);
 
         Mail mail = new Mail();
-        mail.setTemplateId(emailProperties.getSendgridTemplates().get(template.getName()));
+        mail.setTemplateId(EmailTemplate.WELCOME_EMAIL.getName());
         mail.setFrom(from);
         mail.addPersonalization(personalization);
 

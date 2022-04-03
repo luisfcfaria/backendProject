@@ -17,6 +17,7 @@ spring:
     url: ${MARIADB_URL:jdbc:mariadb://localhost:3306/flight}
     username: ${MARIADB_USER:root}
     password: ${MARIADB_PASSWORD:mypass}
+
 jwt:
   token:
     validity: 18000
@@ -28,3 +29,7 @@ jwt:
   header:
     string: Authorization
 
+mailing:
+  sendgrid:
+    api-key:
+    enabled: true

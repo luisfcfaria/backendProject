@@ -26,6 +26,4 @@ public class RoleDataLoader {
         roleRepository.save(role3);
     }
 
-
-
 }

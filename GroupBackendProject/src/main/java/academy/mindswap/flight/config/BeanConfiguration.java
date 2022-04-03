@@ -1,6 +1,9 @@
 package academy.mindswap.flight.config;
 
 
+import academy.mindswap.flight.gatewayemail.SendGridProperties;
+import academy.mindswap.flight.security.AuthorizationValidation;
+import com.sendgrid.SendGrid;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +14,9 @@ import java.util.concurrent.Executor;
 
 @Configuration
 public class BeanConfiguration {
+
+
+    private SendGridProperties sendGrid;
 
     @Bean
     public ModelMapper modelMapper() {
@@ -32,7 +38,9 @@ public class BeanConfiguration {
         return executor;
     }
 
-
-
+    @Bean
+    public AuthorizationValidation authorized() {
+        return new AuthorizationValidation();
+    }
 
 }

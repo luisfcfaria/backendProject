@@ -25,7 +25,7 @@ public class User {
 //    @Column
 //    private String lastName;
     @Column
-    private String name /*= Objects.isNull(firstName) ? "" : firstName.concat(" " + lastName)*/;
+    private String name;
     @Column
     private String email;
     @Column

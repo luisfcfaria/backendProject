@@ -20,16 +20,11 @@ public class SetupDataLoader  {
 
     private boolean loaded = false;
 
-//    @EventListener (classes = { ContextStartedEvent.class })
-//    public void onApplicationEventStart() {
-//        System.out.println("ContextStartedEvent");
-//       // userDataLoader.loadData();
-//    }
 
     @EventListener(classes = { ContextStoppedEvent.class, ContextRefreshedEvent.class })
     public void onApplicationEvent() {
         // TODO Auto-generated method stub
-        System.out.println("ContextStoppedEvent or ContextRefreshedEvent");
+        System.out.println("Flight app up and running");
         if (!loaded) {
             roleDataLoader.createRoles();
             flightDataLoader.flightLoader();
