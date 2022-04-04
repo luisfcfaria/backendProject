@@ -1,41 +1,27 @@
 {
 	"info": {
-		"_postman_id": "4a4d54af-150b-4895-9270-6b6a3ae71166",
+		"_postman_id": "b8402816-9e2f-4f9b-9a7c-94118c9cb748",
 		"name": "Heroku-app",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Get All Flights",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
-				"auth": {
-					"type": "noauth"
-				},
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\"email\": \"user1@email.com\",\n\"password\": \"user1\"\n}\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "https://flight-app-mindswap.herokuapp.com/api/flights",
+					"raw": "https://mindswap-flight-app.herokuapp.com/api/flights/list",
 					"protocol": "https",
 					"host": [
-						"flight-app-mindswap",
+						"mindswap-flight-app",
 						"herokuapp",
 						"com"
 					],
 					"path": [
 						"api",
-						"flights"
+						"flights",
+						"list"
 					]
 				}
 			},
@@ -62,10 +48,10 @@
 					}
 				},
 				"url": {
-					"raw": "https://flight-app-mindswap.herokuapp.com/api/flights/destination/OPO",
+					"raw": "https://mindswap-flight-app.herokuapp.com/api/flights/destination/OPO",
 					"protocol": "https",
 					"host": [
-						"flight-app-mindswap",
+						"mindswap-flight-app",
 						"herokuapp",
 						"com"
 					],
@@ -100,10 +86,10 @@
 					}
 				},
 				"url": {
-					"raw": "https://flight-app-mindswap.herokuapp.com/api/flights/origin/OPO",
+					"raw": "https://mindswap-flight-app.herokuapp.com/api/flights/origin/OPO",
 					"protocol": "https",
 					"host": [
-						"flight-app-mindswap",
+						"mindswap-flight-app",
 						"herokuapp",
 						"com"
 					],
@@ -135,10 +121,10 @@
 					}
 				},
 				"url": {
-					"raw": "https://flight-app-mindswap.herokuapp.com/auth/authenticate",
+					"raw": "https://mindswap-flight-app.herokuapp.com/auth/authenticate",
 					"protocol": "https",
 					"host": [
-						"flight-app-mindswap",
+						"mindswap-flight-app",
 						"herokuapp",
 						"com"
 					],
@@ -168,10 +154,10 @@
 					}
 				},
 				"url": {
-					"raw": "https://flight-app-mindswap.herokuapp.com/auth/register",
+					"raw": "https://mindswap-flight-app.herokuapp.com/auth/register",
 					"protocol": "https",
 					"host": [
-						"flight-app-mindswap",
+						"mindswap-flight-app",
 						"herokuapp",
 						"com"
 					],
@@ -199,10 +185,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://flight-app-mindswap.herokuapp.com/api/user/14",
+					"raw": "https://mindswap-flight-app.herokuapp.com/api/user/14",
 					"protocol": "https",
 					"host": [
-						"flight-app-mindswap",
+						"mindswap-flight-app",
 						"herokuapp",
 						"com"
 					],
@@ -240,10 +226,10 @@
 					}
 				},
 				"url": {
-					"raw": "https://flight-app-mindswap.herokuapp.com/api/flights/bookflight",
+					"raw": "https://mindswap-flight-app.herokuapp.com/api/flights/bookflight",
 					"protocol": "https",
 					"host": [
-						"flight-app-mindswap",
+						"mindswap-flight-app",
 						"herokuapp",
 						"com"
 					],
@@ -281,10 +267,10 @@
 					}
 				},
 				"url": {
-					"raw": "https://flight-app-mindswap.herokuapp.com/api/flights/bookflight",
+					"raw": "https://mindswap-flight-app.herokuapp.com/api/flights/bookflight",
 					"protocol": "https",
 					"host": [
-						"flight-app-mindswap",
+						"mindswap-flight-app",
 						"herokuapp",
 						"com"
 					],
@@ -322,10 +308,10 @@
 					}
 				},
 				"url": {
-					"raw": "https://flight-app-mindswap.herokuapp.com/api/flights/updateflight",
+					"raw": "https://mindswap-flight-app.herokuapp.com/api/flights/updateflight",
 					"protocol": "https",
 					"host": [
-						"flight-app-mindswap",
+						"mindswap-flight-app",
 						"herokuapp",
 						"com"
 					],
@@ -363,10 +349,10 @@
 					}
 				},
 				"url": {
-					"raw": "https://flight-app-mindswap.herokuapp.com/api/flights/addflight",
+					"raw": "https://mindswap-flight-app.herokuapp.com/api/flights/addflight",
 					"protocol": "https",
 					"host": [
-						"flight-app-mindswap",
+						"mindswap-flight-app",
 						"herokuapp",
 						"com"
 					],
@@ -407,10 +393,10 @@
 					}
 				},
 				"url": {
-					"raw": "https://flight-app-mindswap.herokuapp.com/api/flights/passengers-per-flight/FR-001",
+					"raw": "https://mindswap-flight-app.herokuapp.com/api/flights/passengers-per-flight/FR-001",
 					"protocol": "https",
 					"host": [
-						"flight-app-mindswap",
+						"mindswap-flight-app",
 						"herokuapp",
 						"com"
 					],
