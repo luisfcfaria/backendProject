@@ -9,10 +9,10 @@ If given admin previleges, you'll be able to create and delete flights and also 
 It's expected you'll receive confirmation emails of your interactions with the app.
 
 ### App URL Heroku
-https://flight-app-mindswap.herokuapp.com
+https://mindswap-flight-app.herokuapp.com/
 
 ### Documentation (Swagger)
-https://flight-app-mindswap.herokuapp.com/swagger-ui/index.html
+https://mindswap-flight-app.herokuapp.com/swagger-ui/index.html
 
 ### Postman collections
 #### At the root of this project you have the postman collections to use the app locally or online:<br/>
