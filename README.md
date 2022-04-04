@@ -34,3 +34,4 @@ docker run -it --rm --link mymariadb  -p 8080:8080 users_service
 docker-compose up
 
 
+
