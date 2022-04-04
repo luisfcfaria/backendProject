@@ -8,22 +8,29 @@ If given admin previleges, you'll be able to create and delete flights and also 
 
 It's expected you'll receive confirmation emails of your interactions with the app.
 
-## Users_service_app
-This app is a service that allows users to register and login.
+### App URL Heroku
+https://flight-app-mindswap.herokuapp.com
 
+### Documentation (Swagger)
+https://flight-app-mindswap.herokuapp.com/swagger-ui/index.html
 
-#TO run the DB
+### Postman collections
+#### At the root of this project you have the postman collections to use the app locally or online:<br/>
+-Heroku-app.postman_collection.json<br/>
+-LocalHost.postman_collection.json<br/>
+
+### Docker and Docker Composed (Localhost)
+
+#### TO run the DB
 docker run --name mymariadb -e MARIADB_ROOT_PASSWORD=mypass -p 3306:3306 -d mariadb:latest
 
-#TO build the APP
+#### TO build the APP
 docker build -t users_service . 
 
-#TO run the APP
+#### TO run the APP
 docker run -it --rm --link mymariadb  -p 8080:8080 users_service
 
-#TO run the APP in compose
+#### TO run the APP in compose
 docker-compose up
 
-#TO APP documentation SWAGGER
-http://localhost:8080/swagger-ui/index.html
 
