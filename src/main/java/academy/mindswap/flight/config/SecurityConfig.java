@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/auth/authenticate",
             "/auth/register",
             "/api/flights/origin/*",
-            "/api/flights/list/*",
+            "/api/flights/list",
             "/api/flights/destination/*"
     };
 
