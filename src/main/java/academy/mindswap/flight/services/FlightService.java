@@ -89,7 +89,7 @@ public class FlightService {
 
         LOGGER.log(Level.INFO, "Updating flight: " + flightDTO.getFlightNumber());
         return flightConverter.convertToDTO(flightRepository
-                .save(flight));
+                .save(flightConverter.convertToEntity(flightDTO)));
     }
 
     public FlightDTO deleteFlight(String flightNumber) {
