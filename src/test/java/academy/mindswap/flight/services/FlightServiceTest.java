@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Optional;
 
-import org.junit.jupiter.api.Disabled;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,6 +38,9 @@ class FlightServiceTest {
 
     @Autowired
     private FlightService flightService;
+
+    @Autowired
+    private FlightConverter flightConverter;
 
     @Test
     void testGetFlightByNumber() {
@@ -108,7 +110,6 @@ class FlightServiceTest {
     }
 
     @Test
-    @Disabled("TODO: Complete this test")
     void testAddFlight3() {
         // Arrange
         Flight flight = new Flight();
@@ -123,7 +124,7 @@ class FlightServiceTest {
         when(this.flightRepository.save((Flight) any())).thenReturn(flight);
 
         // Act
-        this.flightService.addFlight(null);
+        this.flightService.addFlight(flightConverter.convertToDTO(flight));
     }
 
     @Test
@@ -376,7 +377,6 @@ class FlightServiceTest {
 
 
     @Test
-    @Disabled("TODO: Complete this test")
     void testUpdateFlight2() {
         // Arrange
         Flight flight = new Flight();
@@ -402,7 +402,7 @@ class FlightServiceTest {
         when(this.flightRepository.findByFlightNumber((String) any())).thenReturn(Optional.of(flight));
 
         // Act
-        this.flightService.updateFlight(null);
+        this.flightService.updateFlight(flightConverter.convertToDTO(flight1));
     }
 
     @Test
