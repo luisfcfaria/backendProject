@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.function.LongConsumer;
 import java.util.stream.LongStream;
 
+
 @Component
 public class FlightDataLoader {
 
