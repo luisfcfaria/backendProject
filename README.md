@@ -1,3 +1,8 @@
+#Flight App Mindswap
+
+Flight App Mindswap is a Rest API produced by Luis Faria, Tiago Correia, Martim Margarido, Tomás Fonseca, Vanilson Muhongo. This app was developed during the Mindswap Bootcamp as the first backend project.
+
+
 #Users_service_app
 This app is a service that allows users to register and login.
 
