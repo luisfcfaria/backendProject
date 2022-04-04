@@ -104,6 +104,7 @@ public class FlightService {
                     LOGGER.log(Level.INFO, "Flight not found");
                     return new FlightNotFoundException(flightNumber);
                 })
+
                 .getUsers()
                 .stream()
                 .map(userConverter::convertToDto).collect(Collectors.toList());
