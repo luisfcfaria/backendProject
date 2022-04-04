@@ -38,10 +38,10 @@ public class FlightService {
 
         if (flightDTO.getFlightNumber() == null) {
             LOGGER.log(Level.INFO, "Adding flight: " + flightDTO.getFlightNumber());
-            return flightConverter.convertToDTO(flightRepository
-                    .save(flightConverter
-                            .convertToEntity(flightDTO)));
+            Flight flight = flightRepository.save(flightConverter.convertToEntity(flightDTO));
+            return flightConverter.convertToDTO(flight);
         }
+        LOGGER.log(Level.INFO, "Flight already exists: " + flightDTO.getFlightNumber());
         return null;
     }
 
@@ -89,8 +89,7 @@ public class FlightService {
 
         LOGGER.log(Level.INFO, "Updating flight: " + flightDTO.getFlightNumber());
         return flightConverter.convertToDTO(flightRepository
-                .save(flightConverter
-                        .convertToEntity(flightDTO)));
+                .save(flight));
     }
 
     public FlightDTO deleteFlight(String flightNumber) {

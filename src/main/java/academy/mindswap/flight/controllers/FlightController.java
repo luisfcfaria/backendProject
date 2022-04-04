@@ -105,6 +105,7 @@ public class FlightController {
         if(bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(null);
         }
+
         FlightDTO flight = flightService.addFlight(flightDTO);
         if(flight == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
