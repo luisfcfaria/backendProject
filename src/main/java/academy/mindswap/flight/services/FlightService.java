@@ -36,7 +36,7 @@ public class FlightService {
 
     public FlightDTO addFlight(FlightDTO flightDTO) {
 
-        if (flightDTO.getFlightNumber() == null) {
+        if (flightDTO.getFlightNumber() != null) {
             LOGGER.log(Level.INFO, "Adding flight: " + flightDTO.getFlightNumber());
             Flight flight = flightRepository.save(flightConverter.convertToEntity(flightDTO));
             return flightConverter.convertToDTO(flight);
