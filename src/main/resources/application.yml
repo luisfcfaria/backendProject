@@ -14,9 +14,9 @@ spring:
       ddl-auto: ${HIBERNATE_DDL_AUTO:create-drop}
       show-sql: true
   datasource:
-    url: ${MARIADB_URL:jdbc:mariadb://ms-2nd-edition-groups-db00006104.mdb0002418.db.skysql.net:5003/group3?useSSL=true&trustServerCertificate=true}
-    username: ${MARIADB_USERNAME:group3}
-    password: ${MARIADB_PASSWORD:Group3Password!}
+      url: ${MARIADB_URL:jdbc:mariadb://j5zntocs2dn6c3fj.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/v18agywqp0019vom}
+      username: ${MARIADB_USER:yigv7bkgk4erdf4b}
+      password: ${MARIADB_PASSWORD:xf38cj9blzbyvn8x}
 jwt:
   token:
     validity: 18000
